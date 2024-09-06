@@ -4,7 +4,10 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,7 +34,7 @@ public class Authentication extends AppCompatActivity {
         ContentValues values = new ContentValues();
         values.put("username", "test_user");
         values.put("password", "test_password");
-        values.put("email", "test@example.com");
+        values.put("email", "testhiiii@example.com");
         values.put("dob", "1990-01-01");
 
         long newRowId = db.insert("users", null, values); // Thao tác ghi // Thao tác ghi
@@ -41,6 +44,20 @@ public class Authentication extends AppCompatActivity {
 
             Intent i = new Intent(Authentication.this, MainActivity.class);
             startActivity(i);
+        });
+
+        TextView textView4 = findViewById(R.id.textView4);
+
+        textView4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Viết logic khi người dùng click vào TextView này
+                Toast.makeText(getApplicationContext(), "Bạn đã click vào Đăng ký", Toast.LENGTH_SHORT).show();
+
+                // Hoặc thực hiện chuyển hướng sang một Activity khác:
+                Intent intent = new Intent(Authentication.this, Register.class);
+                startActivity(intent);
+            }
         });
     }
 }
