@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,24 +17,37 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.programinglearningapp.MainActivity;
 import com.example.programinglearningapp.R;
+import com.example.programinglearningapp.databinding.ActivityMainBinding;
 import com.example.programinglearningapp.db.DatabaseHelper;
 import com.example.programinglearningapp.ui.auth.Authentication;
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
 import android.content.DialogInterface;
 import androidx.appcompat.app.AlertDialog;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
+
 import android.widget.Toast;
 
 public class MemberManagement extends AppCompatActivity {
     private DatabaseHelper dbHelper;
     private List<User> userList;
     private Button btn_search;
+    private AppBarConfiguration mAppBarConfiguration;
+    private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_member_management);
+
+
 
         dbHelper = new DatabaseHelper(this);
 
@@ -47,6 +61,20 @@ public class MemberManagement extends AppCompatActivity {
             if(search_value.isEmpty()) loadAccounts();
             else searchUsersByName(search_value);
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
+                || super.onSupportNavigateUp();
     }
 
     private void loadAccounts() {
