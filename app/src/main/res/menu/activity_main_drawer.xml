@@ -18,6 +18,11 @@
             android:title="@string/menu_infor_course" />
 
         <item
+            android:id="@+id/nav_member_management"
+            android:icon="@drawable/menu_infor_course"
+            android:title="Quản lý thành viên" />
+
+        <item
             android:id="@+id/nav_log_out"
             android:icon="@drawable/menu_log_out"
             android:title="@string/menu_log_out" />
