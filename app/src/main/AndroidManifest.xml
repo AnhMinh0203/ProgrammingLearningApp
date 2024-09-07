@@ -13,20 +13,31 @@
         android:theme="@style/Theme.ProgramingLearningApp"
         tools:targetApi="31">
         <activity
+            android:name=".ui.MemberManagementEdit"
+            android:exported="false" />
+        <activity
+            android:name=".ui.MemberManagement"
+            android:exported="true"
+            android:theme="@style/Theme.ProgramingLearningApp.NoActionBar" />
+        <activity
+            android:name=".ui.auth.Register"
+            android:exported="true"
+            android:theme="@style/Theme.ProgramingLearningApp.NoActionBar" />
+        <activity
             android:name=".ui.auth.Authentication"
             android:exported="true"
             android:theme="@style/Theme.ProgramingLearningApp.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.ProgramingLearningApp.NoActionBar"/>
+            android:theme="@style/Theme.ProgramingLearningApp.NoActionBar" />
     </application>
 
 </manifest>

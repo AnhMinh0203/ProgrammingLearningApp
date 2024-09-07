@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.MemberManagement">
+
+    <!-- HorizontalScrollView để cuộn theo chiều ngang -->
+
+    <EditText
+        android:id="@+id/editText_fullName"
+        android:layout_width="229dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="Nhập họ tên"
+        android:inputType="text"
+        android:text=""
+        app:layout_constraintEnd_toStartOf="@+id/btn_search"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <HorizontalScrollView
+        android:layout_width="405dp"
+        android:layout_height="532dp"
+        android:layout_marginTop="36dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@+id/editText_fullName"
+        tools:layout_editor_absoluteX="3dp">
+
+        <!-- ScrollView để cuộn theo chiều dọc -->
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fillViewport="true">
+
+            <!-- TableLayout bên trong ScrollView và HorizontalScrollView -->
+            <TableLayout
+                android:id="@+id/tableLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:stretchColumns="1">
+
+                <TableRow android:id="@+id/header_row">
+
+                    <TextView
+                        android:id="@+id/textViewFullname"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:text="Họ tên"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textViewEmail"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:text="Email"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textViewRole"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:text="Quyền"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="8dp"
+                        android:text="Actions"
+                        android:textStyle="bold" />
+                </TableRow>
+
+                <!-- Thêm các hàng khác tại đây -->
+
+            </TableLayout>
+        </ScrollView>
+    </HorizontalScrollView>
+
+    <Button
+        android:id="@+id/btn_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="16dp"
+        android:text="Tìm kiếm"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

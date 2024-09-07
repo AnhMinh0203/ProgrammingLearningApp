@@ -1,6 +1,8 @@
 package com.example.programinglearningapp.db;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -64,4 +66,45 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // CRUD cho các phương thức khác
+
+    public boolean registerUser(String username, String email, String password) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // Kiểm tra xem người dùng đã tồn tại chưa
+        String query = "SELECT * FROM users WHERE email = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{email});
+
+        if (cursor.getCount() > 0) {
+            // Người dùng đã tồn tại
+            cursor.close();
+            return false; // Đăng ký thất bại
+        }
+
+        cursor.close();
+
+        // Nếu người dùng chưa tồn tại, thêm người dùng mới
+        ContentValues values = new ContentValues();
+        values.put("username", username);
+        values.put("password", password);
+        values.put("email", email);
+
+        long result = db.insert("users", null, values);
+        return result != -1; // Trả về true nếu thêm thành công
+    }
+
+    public boolean loginUser(String email, String password) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        // Truy vấn kiểm tra tên người dùng và mật khẩu
+        String query = "SELECT * FROM users WHERE email = ? AND password = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{email, password});
+
+        if (cursor.getCount() > 0) {
+            cursor.close();
+            return true; // Đăng nhập thành công
+        }
+
+        cursor.close();
+        return false; // Đăng nhập thất bại
+    }
 }

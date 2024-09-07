@@ -5,16 +5,17 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.programinglearningapp.MainActivity;
 import com.example.programinglearningapp.R;
 import com.example.programinglearningapp.db.DatabaseHelper;
+import com.example.programinglearningapp.ui.MemberManagement;
 
 public class Authentication extends AppCompatActivity {
     private Button button_signIn;
@@ -25,21 +26,35 @@ public class Authentication extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_authentication);
         dbHelper = new DatabaseHelper(this);
-
-        // Ghi thử dữ liệu vào bảng "users"
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("username", "test_user");
-        values.put("password", "test_password");
-        values.put("email", "test@example.com");
-        values.put("dob", "1990-01-01");
-
-        long newRowId = db.insert("users", null, values); // Thao tác ghi // Thao tác ghi
-        db.close();
         button_signIn = findViewById(R.id.button_signIn);
         button_signIn.setOnClickListener(v->{
+            EditText editTextFullName = findViewById(R.id.editText_fullName);
+            EditText editTextPassword = findViewById(R.id.editText_password);
 
-            Intent i = new Intent(Authentication.this, MainActivity.class);
+            String email = editTextFullName.getText().toString();
+            String password = editTextPassword.getText().toString();
+
+            if(!email.isEmpty() && !password.isEmpty()) {
+                boolean isLoggedIn = dbHelper.loginUser(email, password);
+                if (isLoggedIn) {
+                    Toast.makeText(this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(Authentication.this, MainActivity.class);
+                    startActivity(i);
+                } else {
+                    Toast.makeText(this, "Sai email hoặc mật khẩu", Toast.LENGTH_SHORT).show();
+                }
+            }
+            else {
+                Toast.makeText(this, "Vui lòng điền đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+            }
+
+        });
+
+        TextView textView4 = findViewById(R.id.textView4);
+
+        textView4.setOnClickListener(v->{
+
+            Intent i = new Intent(Authentication.this, MemberManagement.class);
             startActivity(i);
         });
     }
