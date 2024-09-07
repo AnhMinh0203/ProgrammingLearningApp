@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.Menu;
 
 import com.example.programinglearningapp.ui.MemberManagement;
+import com.example.programinglearningapp.ui.auth.Authentication;
 import com.example.programinglearningapp.ui.course.CourseListFragment;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
@@ -65,17 +66,21 @@ public class MainActivity extends AppCompatActivity {
                     // Mở MemberManagementActivity
                     Intent intent = new Intent(MainActivity.this, MemberManagement.class);
                     startActivity(intent);
-                } else {
+                }
+                else if (id == R.id.nav_log_out) {
+                    Intent intent = new Intent(MainActivity.this, Authentication.class);
+                    startActivity(intent);
+                }
+                else if (id == R.id.nav_home) {
+                    Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                    startActivity(intent);
+                }else {
                     // Xử lý các mục khác
                     NavController navController = Navigation.findNavController(MainActivity.this, R.id.nav_host_fragment_content_main);
-                    if (id == R.id.nav_home) {
-                        navController.navigate(R.id.nav_home);
-                    } else if (id == R.id.nav_infor_personal) {
+                    if (id == R.id.nav_infor_personal) {
                         navController.navigate(R.id.nav_infor_personal);
                     } else if (id == R.id.nav_infor_course) {
                         navController.navigate(R.id.nav_infor_course);
-                    } else if (id == R.id.nav_log_out) {
-                        // Xử lý đăng xuất
                     }
                 }
 
