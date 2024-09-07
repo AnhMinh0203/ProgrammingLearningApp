@@ -13,6 +13,13 @@
         layout="@layout/app_bar_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+    <fragment
+        android:id="@+id/listFragment"
+        class="com.example.programinglearningapp.ui.course.CourseListFragment"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        tools:layout="@layout/fragment_course_list"></fragment>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
