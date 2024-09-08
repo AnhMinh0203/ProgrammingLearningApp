@@ -43,14 +43,12 @@
 
     </LinearLayout>
 
-    <!--    // HTML-->
-
     <TextView
         android:id="@+id/textMyCourses"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="80dp"
         android:text="Khóa học của tôi"
         android:textColor="#000000"
         android:textSize="20sp"
@@ -60,103 +58,134 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageHTML_CSS"
-        android:layout_width="134dp"
-        android:layout_height="113dp"
-        android:layout_marginTop="160dp"
-        android:src="@drawable/html_css"
+    <!--    // HTML-->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="140dp"
+        android:orientation="vertical"
+        android:background="@drawable/border_radius_courses"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.14"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <!--    // JavaScript-->
+        <ImageView
+            android:id="@+id/imageHTML_CSS"
+            android:layout_width="134dp"
+            android:layout_height="113dp"
+            android:layout_marginTop="-8dp"
+            android:src="@drawable/html_css" />
 
-    <TextView
-        android:id="@+id/textHTML_CSS"
-        android:layout_width="134dp"
-        android:layout_height="19dp"
-        android:layout_marginTop="12dp"
-        android:maxLines="2"
-        android:text="HTMT, CSS từ Zero đến Hero"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.14"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageHTML_CSS" />
+        <TextView
+            android:id="@+id/textHTML_CSS"
+            android:layout_width="134dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:maxLines="2"
+            android:text="HTMT, CSS từ Zero đến Hero"
+            android:textAlignment="center"
+            android:textColor="#000000" />
+    </LinearLayout>
 
-    <ImageView
-        android:id="@+id/imageJavascript"
-        android:layout_width="134dp"
-        android:layout_height="113dp"
-        android:layout_marginTop="160dp"
-        android:src="@drawable/javascript"
+<!--    Javascript-->
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="140dp"
+        android:orientation="vertical"
+        android:background="@drawable/border_radius_courses"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.851"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/textJavascript"
-        android:layout_width="134dp"
-        android:layout_height="19dp"
-        android:layout_marginTop="12dp"
-        android:text="Javascipt cơ bản"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.85"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageJavascript" />
+        <ImageView
+            android:id="@+id/imageJavascript"
+            android:layout_width="134dp"
+            android:layout_height="113dp"
+            android:layout_marginTop="-8dp"
+            android:src="@drawable/responsive" />
 
-<!--    ReactJS-->
+        <TextView
+            android:id="@+id/textJavascript"
+            android:layout_width="134dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:maxLines="2"
+            android:text="Responsive với Grid System"
+            android:textAlignment="center"
+            android:textColor="#000000" />
+    </LinearLayout>
 
-    <ImageView
-        android:id="@+id/imageReactJS"
-        android:layout_width="134dp"
-        android:layout_height="113dp"
-        android:layout_marginTop="356dp"
-        android:src="@drawable/reactjs"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.14"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <!--    NodeJs-->
-
-    <TextView
-        android:id="@+id/textReactJS"
-        android:layout_width="134dp"
-        android:layout_height="19dp"
-        android:layout_marginTop="12dp"
-        android:maxLines="2"
-        android:text="Lập trình website với ReactJS"
+    <!--    ReactJS-->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="348dp"
+        android:orientation="vertical"
+        android:background="@drawable/border_radius_courses"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.14"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageReactJS" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <ImageView
-        android:id="@+id/imageNodeJs"
-        android:layout_width="134dp"
-        android:layout_height="113dp"
-        android:layout_marginTop="356dp"
-        android:src="@drawable/nodejs"
+        <ImageView
+            android:id="@+id/imageReactJS"
+            android:layout_width="134dp"
+            android:layout_height="113dp"
+            android:layout_marginTop="-8dp"
+            android:src="@drawable/reactjs" />
+
+        <TextView
+            android:id="@+id/textReactJS"
+            android:layout_width="134dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:maxLines="2"
+            android:text="Lập trình website với ReactJS"
+            android:textAlignment="center"
+            android:textColor="#000000" />
+    </LinearLayout>
+
+    <!--    NodeJS-->
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="348dp"
+        android:orientation="vertical"
+        android:background="@drawable/border_radius_courses"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.851"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/textNodeJs"
-        android:layout_width="134dp"
-        android:layout_height="19dp"
-        android:layout_marginTop="12dp"
-        android:text="NodeJS &amp; Express"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.85"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageNodeJs" />
+        <ImageView
+            android:id="@+id/imageNodeJS"
+            android:layout_width="134dp"
+            android:layout_height="113dp"
+            android:layout_marginTop="-8dp"
+            android:src="@drawable/nodejs" />
+
+        <TextView
+            android:id="@+id/textNodeJS"
+            android:layout_width="134dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:maxLines="2"
+            android:text="Lập trình với NodeJS &amp; ExpressJS"
+            android:textAlignment="center"
+            android:textColor="#000000" />
+    </LinearLayout>
+
 
     <!--    Fotter-->
-    
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
