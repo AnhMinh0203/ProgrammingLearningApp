@@ -54,7 +54,7 @@ public class Authentication extends AppCompatActivity {
 
         textView4.setOnClickListener(v->{
 
-            Intent i = new Intent(Authentication.this, MemberManagement.class);
+            Intent i = new Intent(Authentication.this, Register.class);
             startActivity(i);
         });
     }
