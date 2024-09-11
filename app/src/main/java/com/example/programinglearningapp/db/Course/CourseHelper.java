@@ -5,8 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import androidx.annotation.NonNull;
-
 import com.example.programinglearningapp.db.DatabaseHelper;
 import com.example.programinglearningapp.model.Course;
 
@@ -21,12 +19,14 @@ public class CourseHelper {
         database = dbHelper.getWritableDatabase();
     }
 
-    public boolean addCourse (@NonNull Course course){
+    public boolean addCourse (Course course){
         ContentValues contentValues = new ContentValues();
         contentValues.put("course_name",course.getTitle());
         contentValues.put("description",course.getDescription());
         contentValues.put("img",course.getImageUrl());
         long result = database.insert("courses",null,contentValues);
+
+    /*    database.execSQL("PRAGMA wal_checkpoint;");*/
 
         return result != -1;
     }
@@ -39,6 +39,7 @@ public class CourseHelper {
         if (cursor.moveToFirst()){
             do{
                 Course course = new Course();
+               /* course.setId(cursor.getInt(cursor.getColumnIndex("id")));*/
                 int idIndex = cursor.getColumnIndex("id");
                 int nameIndex = cursor.getColumnIndex("course_name");
                 int descIndex = cursor.getColumnIndex("description");
