@@ -1,6 +1,5 @@
 package com.example.programinglearningapp.ui.course;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.programinglearningapp.R;
-import com.example.programinglearningapp.db.CourseAdapter;
+import com.example.programinglearningapp.db.Course.CourseAdapter;
 import com.example.programinglearningapp.model.Course;
 
 import java.util.ArrayList;
@@ -25,19 +24,18 @@ public class CourseListFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_course_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_course_management, container, false);
 
-        // Initialize RecyclerView
         recyclerViewCourses = view.findViewById(R.id.recyclerViewCourses);
         recyclerViewCourses.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        // Load course data (this can be from your SQLite DB)
         loadCourses();
-
-        // Initialize adapter and set it to RecyclerView
-
         courseAdapter = new CourseAdapter(getContext(), courseList);
         recyclerViewCourses.setAdapter(courseAdapter);
+
+//        Đây là nut tạo khóa học
+
+
+
 
         return view;
     }
