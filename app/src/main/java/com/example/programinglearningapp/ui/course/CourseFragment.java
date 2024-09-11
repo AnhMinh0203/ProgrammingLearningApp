@@ -1,20 +1,6 @@
 package com.example.programinglearningapp.ui.course;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.programinglearningapp.R;
-import com.example.programinglearningapp.db.CourseAdapter;
-import com.example.programinglearningapp.model.Course;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class CourseFragment extends Fragment {
 //    private RecyclerView recyclerViewCourses;
