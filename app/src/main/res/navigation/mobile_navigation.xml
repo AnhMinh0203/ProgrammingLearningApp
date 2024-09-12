@@ -36,6 +36,12 @@
         tools:layout="@layout/fragment_course_management" />
 
     <fragment
+        android:id="@+id/nav_member_management"
+        android:name="com.example.programinglearningapp.ui.MemberManager.MemberManagementFragment"
+        android:label="Quản lý thaành viên"
+        tools:layout="@layout/activity_member_management" />
+
+    <fragment
         android:id="@+id/nav_log_out"
         android:name="com.example.programinglearningapp.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_log_out"
