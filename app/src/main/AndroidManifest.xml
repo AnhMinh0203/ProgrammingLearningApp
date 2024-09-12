@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProgramingLearningApp"
         tools:targetApi="31">
+<!--        <activity-->
+<!--            android:name=".ui.my_courses.My_courses"-->
+<!--            android:exported="false" />-->
+        <!-- <activity -->
+        <!-- android:name=".ui.register_course.test1" -->
+        <!-- android:exported="false" /> -->
         <activity
             android:name=".ui.MemberManagementEdit"
             android:exported="false" />
@@ -24,7 +30,7 @@
             android:exported="true"
             android:theme="@style/Theme.ProgramingLearningApp.NoActionBar" />
         <activity
-            android:name=".ui.auth.Authentication"
+            android:name=".ui.my_courses.My_courses"
             android:exported="true"
             android:theme="@style/Theme.ProgramingLearningApp.NoActionBar">
             <intent-filter>
