@@ -60,6 +60,7 @@
 
     <!--    // HTML-->
     <LinearLayout
+        android:id="@+id/courseRegistered"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -72,19 +73,20 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/imageHTML_CSS"
+            android:id="@+id/imageCourse"
             android:layout_width="134dp"
             android:layout_height="113dp"
             android:layout_marginTop="-8dp"
             android:src="@drawable/html_css" />
 
         <TextView
-            android:id="@+id/textHTML_CSS"
+            android:id="@+id/textCourse"
             android:layout_width="134dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:maxLines="2"
-            android:text="HTMT, CSS từ Zero đến Hero"
+            android:layout_height="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="20dp"
+            android:maxLines="3"
+            android:text=""
             android:textAlignment="center"
             android:textColor="#000000" />
     </LinearLayout>
