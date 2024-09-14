@@ -6,12 +6,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
@@ -36,9 +39,9 @@ public class Register_courses extends AppCompatActivity {
 //         Ghi thử dữ liệu vào bảng "courses"
 //        SQLiteDatabase db = dbHelper.getWritableDatabase();
 //        ContentValues values = new ContentValues();
-//        values.put("course_name", "NodeJS & ExpressJS");
-//        values.put("description", "Học Back-end với Node & ExpressJS framework, hiểu các khái niệm khi làm Back-end và xây dựng RESTful API cho trang web.");
-//        values.put("img", "nodejs");
+//        values.put("course_name", "Responsive Với Grid System");
+//        values.put("description", "Trong khóa này chúng ta sẽ học về cách xây dựng giao diện web responsive với Grid System, tương tự Bootstrap 4.");
+//        values.put("img", "responsive");
 //        long newRowId = db.insert("courses", null, values);
 //        db.close();
 
@@ -46,7 +49,7 @@ public class Register_courses extends AppCompatActivity {
 //        SQLiteDatabase db = dbHelper.getWritableDatabase();
 //        ContentValues values = new ContentValues();
 //        values.put("course_id", 2);
-//        values.put("title", "Lời khuyên trước khóa học");
+//        values.put("title", "Model");
 //        values.put("description", "test");
 //        long newRowId = db.insert("lessons", null, values);
 //        db.close();
@@ -94,7 +97,7 @@ public class Register_courses extends AppCompatActivity {
                             LinearLayout.LayoutParams.MATCH_PARENT,
                             LinearLayout.LayoutParams.WRAP_CONTENT
                     );
-                    params.setMargins(0, -650, 0, 0); // Thay đổi giá trị này để điều chỉnh margin
+                    params.setMargins(0, -420, 0, 100); // Thay đổi giá trị này để điều chỉnh margin
                     courseLayout.setLayoutParams(params);
 
                     // Thêm LinearLayout vào lessonContainer
@@ -111,37 +114,56 @@ public class Register_courses extends AppCompatActivity {
 
         Cursor cursor1 = registerCourse.getLessonByCourseId(2);
         if (cursor1 != null) {
-            if (cursor1.moveToFirst()) {
-                do {
-//                    String courseName = cursor1.getString(cursor1.getColumnIndexOrThrow("course_name"));
+            int count = cursor1.getCount();
+            // Kiểm tra nếu cursor có dữ liệu
+            if (count > 0) {
+                // Lặp qua tất cả các hàng trong cursor
+                for (int i = 0; i < count; i++) {
+                    cursor1.moveToPosition(i);
+                    // Lấy dữ liệu tiêu đề từ cursor
                     String title = cursor1.getString(cursor1.getColumnIndexOrThrow("title"));
 
-                    LinearLayout courseLayout = new LinearLayout(this);
-                    courseLayout.setOrientation(LinearLayout.VERTICAL);
-                    courseLayout.setPadding(16, 16, 16, 16);
+                    // Tạo một LinearLayout cho từng bài học
+                    LinearLayout lessonLayout = new LinearLayout(this);
+                    lessonLayout.setOrientation(LinearLayout.HORIZONTAL); // Horizontal để các thành phần nằm ngang
+                    lessonLayout.setPadding(8, 8, 8, 8);
+                    lessonLayout.setBackground(ContextCompat.getDrawable(this, R.drawable.border_content_courses));
 
-                    // Tạo và cấu hình TextView cho mô tả khóa học
-                    TextView textLesson  = new TextView(this);
+                    // Tạo ImageView cho biểu tượng bài học
+                    ImageView iconLesson = new ImageView(this);
+                    LinearLayout.LayoutParams iconParams = new LinearLayout.LayoutParams(24, 24);
+                    iconLesson.setLayoutParams(iconParams);
+                    iconLesson.setImageResource(R.drawable.icon_plus);
+                    iconLesson.setContentDescription("Icon");
+                    iconParams.setMargins(10, 20, 0, 20); // Đặt margin cho icon
+
+                    // Tạo TextView cho tiêu đề bài học
+                    TextView textLesson = new TextView(this);
+                    LinearLayout.LayoutParams textParams = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.WRAP_CONTENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT
+                    );
+                    textParams.setMargins(20, 8, 0, 0); // Đặt margin cho TextView
+                    textLesson.setLayoutParams(textParams);
                     textLesson.setText(title);
                     textLesson.setTextSize(16);
-                    textLesson.setTextColor(getResources().getColor(android.R.color.black));
-                    textLesson.setPadding(0, 5, 0, 10);
+                    textLesson.setTextColor(ContextCompat.getColor(this, android.R.color.black));
 
-                    // Thêm các TextView vào LinearLayout
-//                    courseLayout.addView(textHeader);
-                    courseLayout.addView(textLesson);
+                    // Thêm ImageView và TextView vào LinearLayout (lessonLayout)
+                    lessonLayout.addView(iconLesson);
+                    lessonLayout.addView(textLesson);
 
-                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    // Thêm lessonLayout vào container chính (lessonContainer hoặc lessonContent)
+                    lessonContainer.addView(lessonLayout);
+
+                    // Đặt margin cho mỗi LinearLayout để tạo khoảng cách giữa các bài học
+                    LinearLayout.LayoutParams lessonLayoutParams = new LinearLayout.LayoutParams(
                             LinearLayout.LayoutParams.MATCH_PARENT,
                             LinearLayout.LayoutParams.WRAP_CONTENT
                     );
-                    params.setMargins(0, 0, 0, 0); // Thay đổi giá trị này để điều chỉnh margin
-                    courseLayout.setLayoutParams(params);
-
-                    // Thêm LinearLayout vào lessonContent
-                    lessonContent.addView(courseLayout);
-
-                } while (cursor1.moveToNext());
+                    lessonLayoutParams.setMargins(0, 16, 0, 0); // Thêm khoảng cách giữa các layout
+                    lessonLayout.setLayoutParams(lessonLayoutParams);
+                }
 
                 // Đóng cursor sau khi xử lý xong
                 cursor1.close();
@@ -149,6 +171,7 @@ public class Register_courses extends AppCompatActivity {
         } else {
             Log.e("Register_courses", "Cursor is null");
         }
+
 
     }
 
