@@ -13,7 +13,7 @@
             android:icon="@drawable/menu_infor_personal"
             android:title="@string/menu_infor_personal" />
         <item
-            android:id="@+id/nav_infor_course"
+            android:id="@+id/nav_course_management_user"
             android:icon="@drawable/menu_infor_course"
             android:title="@string/menu_infor_course" />
 
@@ -21,6 +21,11 @@
             android:id="@+id/nav_member_management"
             android:icon="@drawable/menu_infor_course"
             android:title="Quản lý thành viên" />
+
+        <item
+            android:id="@+id/nav_course_management_admin"
+            android:icon="@drawable/menu_course_managent"
+            android:title="@string/menu_management_course" />
 
         <item
             android:id="@+id/nav_log_out"

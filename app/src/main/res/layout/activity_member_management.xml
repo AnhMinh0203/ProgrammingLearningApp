@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.MemberManagement">
+    tools:context=".ui.MemberManager.MemberManagement">
 
     <!-- HorizontalScrollView để cuộn theo chiều ngang -->
 
@@ -14,7 +14,7 @@
         android:layout_width="229dp"
         android:layout_height="52dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="128dp"
         android:ems="10"
         android:hint="Nhập họ tên"
         android:inputType="text"
@@ -24,10 +24,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/btn_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="132dp"
+        android:layout_marginEnd="16dp"
+        android:text="Tìm kiếm"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <HorizontalScrollView
         android:layout_width="405dp"
-        android:layout_height="532dp"
-        android:layout_marginTop="36dp"
+        android:layout_height="492dp"
+        android:layout_marginTop="56dp"
         android:fillViewport="true"
         app:layout_constraintTop_toBottomOf="@+id/editText_fullName"
         tools:layout_editor_absoluteX="3dp">
@@ -91,15 +101,5 @@
             </TableLayout>
         </ScrollView>
     </HorizontalScrollView>
-
-    <Button
-        android:id="@+id/btn_search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="16dp"
-        android:text="Tìm kiếm"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

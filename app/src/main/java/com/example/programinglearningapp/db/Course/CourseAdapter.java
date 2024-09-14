@@ -1,4 +1,4 @@
-package com.example.programinglearningapp.db;
+package com.example.programinglearningapp.db.Course;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,9 +9,10 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.programinglearningapp.R;
 import com.example.programinglearningapp.model.Course;
-
+import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseViewHolder> {
@@ -36,6 +37,13 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
         holder.courseDescription.setText(course.getDescription());
         // Load image using Glide or similar library
         // Glide.with(context).load(course.getImageUrl()).into(holder.courseImage);
+
+        // Use Glide to load image
+        Glide.with(context)
+                .load(course.getImageUrl())
+/*                .placeholder(R.drawable.placeholder) // optional placeholder
+                .error(R.drawable.error) // optional error image*/
+                .into(holder.courseImage);
     }
 
     @Override
