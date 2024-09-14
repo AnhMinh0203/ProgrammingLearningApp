@@ -1,6 +1,7 @@
 package com.example.programinglearningapp.model;
 
 public class Course {
+    private int id;
     private String title;
     private String description;
     private String imageUrl;
@@ -12,6 +13,14 @@ public class Course {
     }
 
     public Course() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {

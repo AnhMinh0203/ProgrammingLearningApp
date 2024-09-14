@@ -10,6 +10,7 @@
     <string name="menu_home">Trang chủ</string>
     <string name="menu_infor_personal">Thông tin cá nhân</string>
     <string name="menu_infor_course">Thông tin khóa học</string>
+    <string name="menu_management_course">Quản lý khóa học</string>
     <string name="menu_log_out">Đăng xuất</string>
     <string name="title_activity_authentication">AuthenticationActivity</string>
     <string name="prompt_email">Email</string>

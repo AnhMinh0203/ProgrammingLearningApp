@@ -1,8 +1,6 @@
 package com.example.programinglearningapp.ui.auth;
 
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.programinglearningapp.MainActivity;
 import com.example.programinglearningapp.R;
 import com.example.programinglearningapp.db.DatabaseHelper;
-import com.example.programinglearningapp.ui.MemberManagement;
 
 public class Authentication extends AppCompatActivity {
     private Button button_signIn;
@@ -54,7 +51,7 @@ public class Authentication extends AppCompatActivity {
 
         textView4.setOnClickListener(v->{
 
-            Intent i = new Intent(Authentication.this, MemberManagement.class);
+            Intent i = new Intent(Authentication.this, Register.class);
             startActivity(i);
         });
     }
