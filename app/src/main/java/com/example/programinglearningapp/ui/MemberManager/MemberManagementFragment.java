@@ -22,7 +22,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.programinglearningapp.R;
-import com.example.programinglearningapp.db.CourseAdapter;
+//import com.example.programinglearningapp.db.CourseAdapter;
 import com.example.programinglearningapp.db.DatabaseHelper;
 import com.example.programinglearningapp.ui.User;
 

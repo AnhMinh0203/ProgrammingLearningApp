@@ -36,7 +36,7 @@
             android:exported="true"
             android:theme="@style/Theme.ProgramingLearningApp.NoActionBar" />
         <activity
-            android:name=".ui.my_courses.My_courses"
+            android:name=".ui.auth.Authentication"
             android:exported="true"
             android:theme="@style/Theme.ProgramingLearningApp.NoActionBar">
             <intent-filter>

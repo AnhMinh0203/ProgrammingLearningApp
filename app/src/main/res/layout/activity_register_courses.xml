@@ -59,7 +59,7 @@
                 android:id="@+id/textHeaderRe"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="0dp"
                 android:layout_marginStart="16dp"
                 android:text=""
                 android:textColor="#000000"
@@ -134,30 +134,31 @@
                 android:orientation="vertical"
                 android:padding="8dp">
 
-                <!--    Nội dung Bạn sẽ học được gì-->
+<!--                    Nội dung Bạn sẽ học được gì-->
                 <LinearLayout
                     android:id="@+id/lessonContent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:padding="8dp"
+                    android:visibility="gone"
                     android:background="@drawable/border_content_courses">
 
-                    <ImageView
-                        android:id="@+id/iconlesson"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_marginTop="8dp"
-                        android:contentDescription="Icon"
-                        android:src="@drawable/icon_plus" />
+<!--                    <ImageView-->
+<!--                        android:id="@+id/iconlesson"-->
+<!--                        android:layout_width="24dp"-->
+<!--                        android:layout_height="24dp"-->
+<!--                        android:layout_marginTop="8dp"-->
+<!--                        android:contentDescription="Icon"-->
+<!--                        android:src="@drawable/icon_plus" />-->
 
-                    <TextView
-                        android:id="@+id/textlesson"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:text=""
-                        android:textSize="16sp" />
+<!--                    <TextView-->
+<!--                        android:id="@+id/textlesson"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginStart="8dp"-->
+<!--                        android:text=""-->
+<!--                        android:textSize="16sp" />-->
                 </LinearLayout>
 
             </LinearLayout>
