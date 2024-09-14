@@ -1,52 +1,64 @@
-package com.example.programinglearningapp.ui;
+package com.example.programinglearningapp.ui.MemberManager;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.example.programinglearningapp.MainActivity;
 import com.example.programinglearningapp.R;
+import com.example.programinglearningapp.db.Course.CourseAdapter;
 import com.example.programinglearningapp.db.DatabaseHelper;
-import com.example.programinglearningapp.ui.auth.Authentication;
+import com.example.programinglearningapp.ui.User;
 
 import java.util.ArrayList;
 import java.util.List;
-import android.content.DialogInterface;
-import androidx.appcompat.app.AlertDialog;
-import android.widget.Toast;
 
-public class MemberManagement extends AppCompatActivity {
+public class MemberManagementFragment extends Fragment {
+
     private DatabaseHelper dbHelper;
     private List<User> userList;
+    private TableLayout tableLayout;
     private Button btn_search;
+    private View view;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_member_management);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        view = inflater.inflate(R.layout.activity_member_management, container, false);
+        dbHelper = new DatabaseHelper(getContext());
 
-        dbHelper = new DatabaseHelper(this);
+        // Find the TableLayout by its ID
+        tableLayout = view.findViewById(R.id.tableLayout);
 
         // Load danh sách tài khoản
         loadAccounts();
 
-        btn_search = findViewById(R.id.btn_search);
+        btn_search = view.findViewById(R.id.btn_search);
         btn_search.setOnClickListener(v -> {
-            EditText search = findViewById(R.id.editText_fullName);
+            EditText search = view.findViewById(R.id.editText_fullName);
             String search_value = search.getText().toString();
             if(search_value.isEmpty()) loadAccounts();
             else searchUsersByName(search_value);
         });
+
+        return view;
     }
 
     private void loadAccounts() {
@@ -85,72 +97,59 @@ public class MemberManagement extends AppCompatActivity {
         }
         cursor.close();
         db.close();
-        for (User user : userList) {
-            TableRow tableRow = new TableRow(this);
 
-            TextView textViewUsername = new TextView(this);
+        TableRow.LayoutParams columnParams = new TableRow.LayoutParams(
+                0, TableRow.LayoutParams.WRAP_CONTENT, 1f); // Equal weight for all columns
+
+        for (User user : userList) {
+            TableRow tableRow = new TableRow(getContext());
+
+            TextView textViewUsername = new TextView(getContext());
             textViewUsername.setText(user.getUsername());
             textViewUsername.setPadding(8, 8, 8, 8);
-            textViewUsername.setGravity(View.TEXT_ALIGNMENT_CENTER);
-            // Giảm kích thước font
-            textViewUsername.setTextSize(12);  // Ví dụ kích thước 12sp
-            // Cho phép tự động xuống dòng nếu văn bản dài
-            textViewUsername.setSingleLine(false);
-            textViewUsername.setMaxLines(3);  // Tối đa 3 dòng
-            textViewUsername.setEllipsize(null);  // Không có dấu "..." khi xuống dòng
+            textViewUsername.setGravity(Gravity.CENTER);
+            textViewUsername.setLayoutParams(columnParams);
 
-            TextView textViewEmail = new TextView(this);
+            TextView textViewEmail = new TextView(getContext());
             textViewEmail.setText(user.getEmail());
             textViewEmail.setPadding(8, 8, 8, 8);
-            textViewEmail.setGravity(View.TEXT_ALIGNMENT_CENTER);
-            // Giảm kích thước font
-            textViewEmail.setTextSize(12);  // Ví dụ kích thước 12sp
-            // Cho phép tự động xuống dòng nếu văn bản dài
-            textViewEmail.setSingleLine(false);
-            textViewEmail.setMaxLines(3);  // Tối đa 3 dòng
-            textViewEmail.setEllipsize(null);  // Không có dấu "..." khi xuống dòng
+            textViewEmail.setGravity(Gravity.CENTER);
+            textViewEmail.setLayoutParams(columnParams);
 
-            TextView textViewRole = new TextView(this);
-            int role = user.getRole();
-            if(role == 1) textViewRole.setText("Admin");
-            else textViewRole.setText("User");
+            TextView textViewRole = new TextView(getContext());
+            textViewRole.setText(user.getRole() == 1 ? "Admin" : "User");
             textViewRole.setPadding(8, 8, 8, 8);
-            textViewRole.setGravity(View.TEXT_ALIGNMENT_CENTER);
-            // Giảm kích thước font
-            textViewRole.setTextSize(12);  // Ví dụ kích thước 12sp
-            // Cho phép tự động xuống dòng nếu văn bản dài
-            textViewRole.setSingleLine(false);
-            textViewRole.setMaxLines(3);  // Tối đa 3 dòng
-            textViewRole.setEllipsize(null);  // Không có dấu "..." khi xuống dòng
+            textViewRole.setGravity(Gravity.CENTER);
+            textViewRole.setLayoutParams(columnParams);
 
-            Button buttonEdit = new Button(this);
-            buttonEdit.setText("Edit");
-            buttonEdit.setTextSize(12);  // Ví dụ kích thước 12sp
-            // Điều chỉnh kích thước của Button
-            TableRow.LayoutParams paramsEdit = new TableRow.LayoutParams(
-                    TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT
-            );
-            buttonEdit.setLayoutParams(paramsEdit);
+            // Set fixed width for buttons to maintain alignment
+            TableRow.LayoutParams buttonParams = new TableRow.LayoutParams(
+                    0, TableRow.LayoutParams.WRAP_CONTENT, 1f);
+            buttonParams.setMargins(8, 8, 8, 8); // Optional: add some margin between buttons
+
+            Button buttonEdit = new Button(getContext());
+            buttonEdit.setText("EDIT");
+            buttonEdit.setLayoutParams(buttonParams);
             buttonEdit.setOnClickListener(v -> {
-                Intent intent = new Intent(MemberManagement.this, MemberManagementEdit.class);
-                intent.putExtra("userId", user.getId());
-                intent.putExtra("username", user.getUsername());
-                intent.putExtra("email", user.getEmail());
-                intent.putExtra("dob", user.getDob());
-                intent.putExtra("role", user.getRole());
+                Intent intent = new Intent(getActivity(), MemberManagementEdit.class);
+//                intent.putExtra("userId", user.getId());
+//                intent.putExtra("username", user.getUsername());
+//                intent.putExtra("email", user.getEmail());
+//                intent.putExtra("dob", user.getDob());
+//                intent.putExtra("role", user.getRole());
+//
+//                Bundle bundle = new Bundle();
+//                bundle.putInt("userId", user.getId());
+//                bundle.putString("username", user.getUsername());
+//                bundle.putString("email", user.getEmail());
+//                bundle.putString("dob", user.getDob());
+//                bundle.putInt("role", user.getRole());
                 startActivity(intent);
             });
 
-            Button buttonDelete = new Button(this);
-            buttonDelete.setText("Delete");
-            buttonDelete.setTextSize(12);  // Ví dụ kích thước 12sp
-            // Điều chỉnh kích thước của Button
-            TableRow.LayoutParams paramsDelete = new TableRow.LayoutParams(
-                    TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT
-            );
-            buttonDelete.setLayoutParams(paramsDelete);
+            Button buttonDelete = new Button(getContext());
+            buttonDelete.setText("DELETE");
+            buttonDelete.setLayoutParams(buttonParams);
             buttonDelete.setOnClickListener(v -> {
                 Delete(user.getId());
             });
@@ -164,31 +163,23 @@ public class MemberManagement extends AppCompatActivity {
         }
     }
     private void Delete(int userId) {
-        new AlertDialog.Builder(this)
+        new AlertDialog.Builder(getContext())
                 .setTitle("Xác nhận")
                 .setMessage("Bạn có chắc chắn không?")
-                .setPositiveButton("Có", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        SQLiteDatabase db = dbHelper.getWritableDatabase();
-                        db.delete("users", "id = ?", new String[]{String.valueOf(userId)});
-                        db.close();
-                        Toast.makeText(MemberManagement.this, "User deleted", Toast.LENGTH_SHORT).show();
-                        loadAccounts();
-                    }
+                .setPositiveButton("Có", (dialog, which) -> {
+                    SQLiteDatabase db = dbHelper.getWritableDatabase();
+                    db.delete("users", "id = ?", new String[]{String.valueOf(userId)});
+                    db.close();
+                    Toast.makeText(getContext(), "User deleted", Toast.LENGTH_SHORT).show();
+                    loadAccounts();
                 })
-                .setNegativeButton("Không", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Xử lý khi người dùng nhấn "Không"
-                    }
-                })
+                .setNegativeButton("Không", null)
                 .show();
     }
 
 
     public void searchUsersByName(String name) {
-        TableLayout tableLayout = findViewById(R.id.tableLayout);
+        TableLayout tableLayout = view.findViewById(R.id.tableLayout);
         int headerId = R.id.header_row;  // Thay thế bằng ID thực tế của header row nếu cần
 
         // Lấy số lượng các hàng trong TableLayout
@@ -226,9 +217,9 @@ public class MemberManagement extends AppCompatActivity {
         cursor.close();
         db.close();
         for (User user : userList) {
-            TableRow tableRow = new TableRow(this);
+            TableRow tableRow = new TableRow(getContext());
 
-            TextView textViewUsername = new TextView(this);
+            TextView textViewUsername = new TextView(getContext());
             textViewUsername.setText(user.getUsername());
             textViewUsername.setPadding(8, 8, 8, 8);
             textViewUsername.setGravity(View.TEXT_ALIGNMENT_CENTER);
@@ -239,7 +230,7 @@ public class MemberManagement extends AppCompatActivity {
             textViewUsername.setMaxLines(3);  // Tối đa 3 dòng
             textViewUsername.setEllipsize(null);  // Không có dấu "..." khi xuống dòng
 
-            TextView textViewEmail = new TextView(this);
+            TextView textViewEmail = new TextView(getContext());
             textViewEmail.setText(user.getEmail());
             textViewEmail.setPadding(8, 8, 8, 8);
             textViewEmail.setGravity(View.TEXT_ALIGNMENT_CENTER);
@@ -250,7 +241,7 @@ public class MemberManagement extends AppCompatActivity {
             textViewEmail.setMaxLines(3);  // Tối đa 3 dòng
             textViewEmail.setEllipsize(null);  // Không có dấu "..." khi xuống dòng
 
-            TextView textViewRole = new TextView(this);
+            TextView textViewRole = new TextView(getContext());
             int role = user.getRole();
             if(role == 1) textViewRole.setText("Admin");
             else textViewRole.setText("User");
@@ -263,7 +254,7 @@ public class MemberManagement extends AppCompatActivity {
             textViewRole.setMaxLines(3);  // Tối đa 3 dòng
             textViewRole.setEllipsize(null);  // Không có dấu "..." khi xuống dòng
 
-            Button buttonEdit = new Button(this);
+            Button buttonEdit = new Button(getContext());
             buttonEdit.setText("Edit");
             buttonEdit.setTextSize(12);  // Ví dụ kích thước 12sp
             // Điều chỉnh kích thước của Button
@@ -277,7 +268,7 @@ public class MemberManagement extends AppCompatActivity {
                 loadAccounts();
             });
 
-            Button buttonDelete = new Button(this);
+            Button buttonDelete = new Button(getContext());
             buttonDelete.setText("Delete");
             buttonDelete.setTextSize(12);  // Ví dụ kích thước 12sp
             // Điều chỉnh kích thước của Button
