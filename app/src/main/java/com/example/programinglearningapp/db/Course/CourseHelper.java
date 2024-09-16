@@ -63,4 +63,43 @@ public class CourseHelper {
         cursor.close();
         return courses;
     }
+
+    public List<Course> getCoursesRegisterForUser (int user_id){
+        List<Course> courses = new ArrayList<>();
+        String query = "SELECT courses.course_name, courses.description, courses.img " +
+                "FROM user_courses " +
+                "JOIN courses ON user_courses.course_id = courses.id " +
+                "WHERE user_courses.user_id = ?";
+
+        Cursor cursor = database.rawQuery(query, new String[]{String.valueOf(user_id)});
+
+        if (cursor.moveToFirst()){
+            do{
+                Course course = new Course();
+                /* course.setId(cursor.getInt(cursor.getColumnIndex("id")));*/
+                int idIndex = cursor.getColumnIndex("id");
+                int nameIndex = cursor.getColumnIndex("course_name");
+                int descIndex = cursor.getColumnIndex("description");
+                int imgIndex = cursor.getColumnIndex("img");
+
+                if (idIndex >= 0) {
+                    course.setId(cursor.getInt(idIndex));
+                }
+                if (nameIndex >= 0) {
+                    course.setTitle(cursor.getString(nameIndex));
+                }
+                if (descIndex >= 0) {
+                    course.setDescription(cursor.getString(descIndex));
+                }
+                if (imgIndex >= 0) {
+                    course.setImageUrl(cursor.getString(imgIndex));
+                }
+                courses.add(course);
+            }while (cursor.moveToNext());
+        }
+        List<Course> test = courses;
+
+        cursor.close();
+        return courses;
+    }
 }
