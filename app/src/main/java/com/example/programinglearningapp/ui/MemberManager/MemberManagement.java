@@ -61,8 +61,6 @@ public class MemberManagement extends AppCompatActivity {
             if(search_value.isEmpty()) loadAccounts();
             else searchUsersByName(search_value);
         });
-
-        return view;
     }
 
     @Override
