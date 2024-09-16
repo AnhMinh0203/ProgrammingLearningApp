@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -13,20 +15,22 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProgramingLearningApp"
         tools:targetApi="31">
-<!--        <activity-->
-<!--            android:name=".ui.my_courses.My_courses"-->
-<!--            android:exported="false" />-->
+        <activity
+            android:name=".ui.MemberManager.MemberManagementEdit"
+            android:exported="false"
+            android:theme="@style/Theme.ProgramingLearningApp.NoActionBar" />
+        <activity
+            android:name=".ui.MemberManager.Test"
+            android:exported="false" /> <!-- <activity -->
+        <!-- android:name=".ui.my_courses.My_courses" -->
+        <!-- android:exported="false" /> -->
         <!-- <activity -->
         <!-- android:name=".ui.register_course.test1" -->
         <!-- android:exported="false" /> -->
         <activity
             android:name=".ui.courseManagement.CourseManager_Create"
             android:exported="false"
-            android:theme="@style/Theme.ProgramingLearningApp.NoActionBar"/>
-
-        <activity
-            android:name=".ui.MemberManager.MemberManagementEdit"
-            android:exported="false" />
+            android:theme="@style/Theme.ProgramingLearningApp.NoActionBar" />
         <activity
             android:name=".ui.MemberManager.MemberManagement"
             android:exported="true"
