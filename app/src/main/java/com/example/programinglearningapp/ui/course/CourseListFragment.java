@@ -17,7 +17,7 @@ import com.example.programinglearningapp.model.Course;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CourseListFragment extends Fragment {
+public class CourseListFragment extends Fragment  implements CourseAdapter.OnCourseClickListener{
     private RecyclerView recyclerViewCourses;
     private CourseAdapter courseAdapter;
     private List<Course> courseList;
@@ -29,7 +29,7 @@ public class CourseListFragment extends Fragment {
         recyclerViewCourses = view.findViewById(R.id.recyclerViewCourses);
         recyclerViewCourses.setLayoutManager(new LinearLayoutManager(getContext()));
         loadCourses();
-        courseAdapter = new CourseAdapter(getContext(), courseList);
+        courseAdapter = new CourseAdapter(getContext(), courseList,this);
         recyclerViewCourses.setAdapter(courseAdapter);
 
 //        Đây là nut tạo khóa học
@@ -46,5 +46,10 @@ public class CourseListFragment extends Fragment {
         courseList.add(new Course("Lập trình C++", "Từ cơ bản đến nâng cao", "https://example.com/img1.jpg"));
         courseList.add(new Course("Lập trình Java", "Lập trình hướng đối tượng", "https://example.com/img2.jpg"));
         // Add more sample courses...
+    }
+    @Override
+    public void onCourseClick(Course course) {
+        // Handle the course click event here
+        // For example, you can navigate to a detail view
     }
 }

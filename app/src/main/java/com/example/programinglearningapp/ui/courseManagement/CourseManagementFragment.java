@@ -17,19 +17,22 @@ import com.example.programinglearningapp.R;
 import com.example.programinglearningapp.db.Course.CourseAdapter;
 import com.example.programinglearningapp.db.Course.CourseHelper;
 import com.example.programinglearningapp.model.Course;
+import com.example.programinglearningapp.ui.course.courseDetail;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CourseManagementFragment extends Fragment {
+public class CourseManagementFragment extends Fragment implements CourseAdapter.OnCourseClickListener {
+
     private RecyclerView recyclerViewCourses;
     private CourseAdapter courseAdapter;
     private List<Course> courseList;
     private CourseHelper courseHelper;
     private static final int REQUEST_CODE_CREATE_COURSE = 1;
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         courseHelper = new CourseHelper(requireContext());
         // Inflate the layout for this fragment and store it in 'view'
@@ -39,12 +42,11 @@ public class CourseManagementFragment extends Fragment {
         recyclerViewCourses = view.findViewById(R.id.recyclerViewCourses);
         recyclerViewCourses.setLayoutManager(new GridLayoutManager(getContext(), 2));
         courseList = new ArrayList<>();
-        courseAdapter = new CourseAdapter(getContext(), courseList);
-        // Load course data (this can be from your SQLite DB)
-        loadCourses();
-
-        // Initialize adapter and set it to RecyclerView
+        courseAdapter = new CourseAdapter(getContext(), courseList, this); // Pass 'this' as OnCourseClickListener
         recyclerViewCourses.setAdapter(courseAdapter);
+
+        // Load course data
+        loadCourses();
 
         // Initialize FloatingActionButton
         FloatingActionButton fab = view.findViewById(R.id.fab);
@@ -53,8 +55,10 @@ public class CourseManagementFragment extends Fragment {
             Intent intent = new Intent(getActivity(), CourseManager_Create.class);
             startActivityForResult(intent, REQUEST_CODE_CREATE_COURSE);
         });
+
         return view;
     }
+
     private void loadCourses() {
         List<Course> newCourseList = courseHelper.getAllCourses();
 
@@ -66,4 +70,15 @@ public class CourseManagementFragment extends Fragment {
             Log.e("CourseManagementFragment", "Failed to load courses: newCourseList is null");
         }
     }
+
+    @Override
+    public void onCourseClick(Course course) {
+        // Navigate to CourseDetailActivity
+        Intent intent = new Intent(getActivity(), courseDetail.class);
+        intent.putExtra("courseTitle", course.getTitle());
+        intent.putExtra("courseDescription", course.getDescription());
+        intent.putExtra("courseImage", course.getImageUrl());
+        startActivity(intent);
+    }
 }
+
