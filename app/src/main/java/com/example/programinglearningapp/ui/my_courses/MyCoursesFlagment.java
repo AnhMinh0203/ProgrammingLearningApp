@@ -25,7 +25,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyCoursesFlagment extends Fragment {
+public class MyCoursesFlagment extends Fragment implements CourseAdapter.OnCourseClickListener{
     private RecyclerView recyclerViewCourses;
     private CourseAdapter courseAdapter;
     private List<Course> courseList;
@@ -43,7 +43,7 @@ public class MyCoursesFlagment extends Fragment {
         recyclerViewCourses = view.findViewById(R.id.courseRegistered);
         recyclerViewCourses.setLayoutManager(new GridLayoutManager(getContext(), 2));
         courseList = new ArrayList<>();
-        courseAdapter = new CourseAdapter(getContext(), courseList);
+        courseAdapter = new CourseAdapter(getContext(), courseList,this);
         // Load course data (this can be from your SQLite DB)
         loadCourses();
 
@@ -66,7 +66,12 @@ public class MyCoursesFlagment extends Fragment {
             Log.e("MyCoursesFlagment", "Failed to load courses: newCourseList is null");
         }
     }
-
+    @Override
+    public void onCourseClick(Course course) {
+        Intent intent = new Intent(getContext(), CourseManager_Create.class);
+        intent.putExtra("course_id", course.getId());  // Handle course click and pass data
+        startActivity(intent);
+    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();

@@ -1,13 +1,11 @@
 package com.example.programinglearningapp.ui.MemberManager;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TableLayout;
@@ -35,7 +33,6 @@ import android.widget.Toast;
 public class MemberManagement extends AppCompatActivity {
     private DatabaseHelper dbHelper;
     private List<User> userList;
-    private TableLayout tableLayout;
     private Button btn_search;
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
@@ -113,10 +110,6 @@ public class MemberManagement extends AppCompatActivity {
         }
         cursor.close();
         db.close();
-
-        TableRow.LayoutParams columnParams = new TableRow.LayoutParams(
-                0, TableRow.LayoutParams.WRAP_CONTENT, 1f); // Equal weight for all columns
-
         for (User user : userList) {
             TableRow tableRow = new TableRow(this);
 
@@ -215,7 +208,6 @@ public class MemberManagement extends AppCompatActivity {
                         // Xử lý khi người dùng nhấn "Không"
                     }
                 })
-                .setNegativeButton("Không", null)
                 .show();
     }
 
