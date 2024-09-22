@@ -58,6 +58,15 @@ public class CourseManagementFragment extends Fragment implements CourseAdapter.
 
         return view;
     }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_CODE_CREATE_COURSE && resultCode == getActivity().RESULT_OK) {
+            // Course created successfully, reload the course list
+            loadCourses();
+        }
+    }
 
     private void loadCourses() {
         List<Course> newCourseList = courseHelper.getAllCourses();

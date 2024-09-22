@@ -1,6 +1,7 @@
 package com.example.programinglearningapp.db.Course;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,15 +39,21 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
         Course course = courseList.get(position);
         holder.courseTitle.setText(course.getTitle());
         holder.courseDescription.setText(course.getDescription());
-        // Load image using Glide or similar library
-        // Glide.with(context).load(course.getImageUrl()).into(holder.courseImage);
 
-        // Use Glide to load image
-        Glide.with(context)
-                .load(course.getImageUrl())
-/*                .placeholder(R.drawable.placeholder) // optional placeholder
-                .error(R.drawable.error) // optional error image*/
-                .into(holder.courseImage);
+        // Check if image URL is valid
+        String imageUrl = course.getImageUrl();
+        if (imageUrl != null && !imageUrl.isEmpty()) {
+            // Use Glide to load image
+            Log.d("ImageURL", "Image URL: " + course.getImageUrl());
+            Glide.with(context)
+                    .load(imageUrl)
+                    .placeholder(R.drawable.placeholder_course) // optional placeholder
+//                    .error(R.drawable.error) // optional error image
+                    .into(holder.courseImage);
+        } else {
+            Log.e("CourseAdapter", "Image URL is null or empty for course: " + course.getTitle());
+            holder.courseImage.setImageResource(R.drawable.placeholder_course); // Set default image if URL is invalid
+        }
 
         holder.itemView.setOnClickListener(v -> {
             if (onCourseClickListener != null) {
@@ -54,6 +61,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
             }
         });
     }
+
 
     @Override
     public int getItemCount() {
@@ -73,5 +81,10 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
     }
     public interface OnCourseClickListener {
         void onCourseClick(Course course);
+    }
+    public void updateCourseList(List<Course> newCourses) {
+        courseList.clear();
+        courseList.addAll(newCourses);
+        notifyDataSetChanged();
     }
 }
