@@ -45,9 +45,15 @@ dependencies {
     implementation(libs.navigation.ui)
     implementation(libs.annotation)
     implementation(libs.activity)
-    // Add Glide dependencies
+    // Thêm phụ thuộc Glide
     implementation(libs.glide)
     annotationProcessor(libs.compiler)
+
+    // Thêm thư viện RTE cho nội dung bài học
+//    implementation(libs.android.rteditor)
+    implementation (libs.richeditor.android)
+//    implementation(libs.richeditor.compose)
+    // Phụ thuộc cho unit test và UI test
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

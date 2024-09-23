@@ -1,5 +1,6 @@
 [versions]
 agp = "8.5.1"
+androidRteditor = "1.8.0"
 glide = "4.15.1"
 junit = "4.13.2"
 junitVersion = "1.2.1"
@@ -13,8 +14,11 @@ navigationFragment = "2.8.0"
 navigationUi = "2.8.0"
 annotation = "1.6.0"
 activity = "1.9.2"
+richeditorAndroid = "2.0.0"
+richeditorCompose = "1.0.0-rc07"
 
 [libraries]
+android-rteditor = { module = "com.1gravity:android-rteditor", version.ref = "androidRteditor" }
 compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glide" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -29,6 +33,8 @@ navigation-fragment = { group = "androidx.navigation", name = "navigation-fragme
 navigation-ui = { group = "androidx.navigation", name = "navigation-ui", version.ref = "navigationUi" }
 annotation = { group = "androidx.annotation", name = "annotation", version.ref = "annotation" }
 activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
+richeditor-android = { module = "jp.wasabeef:richeditor-android", version.ref = "richeditorAndroid" }
+richeditor-compose = { module = "com.mohamedrejeb.richeditor:richeditor-compose", version.ref = "richeditorCompose" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
