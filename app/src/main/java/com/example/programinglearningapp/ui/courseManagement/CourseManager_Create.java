@@ -57,6 +57,7 @@ public class CourseManager_Create extends AppCompatActivity {
                 Toast.makeText(this, "Thêm khóa học thành công", Toast.LENGTH_SHORT).show();
             }
             Intent resultIntent = new Intent();
+            resultIntent.putExtra("courseAdded", true);
             setResult(RESULT_OK, resultIntent);
             finish();
         });

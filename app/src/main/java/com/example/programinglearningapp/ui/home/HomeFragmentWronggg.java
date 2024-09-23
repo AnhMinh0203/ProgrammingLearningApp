@@ -1,6 +1,5 @@
 package com.example.programinglearningapp.ui.home;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,44 +12,41 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.programinglearningapp.R;
+import com.example.programinglearningapp.databinding.FragmentHomeBinding;
 import com.example.programinglearningapp.db.Course.CourseAdapter;
 import com.example.programinglearningapp.db.Course.CourseHelper;
 import com.example.programinglearningapp.model.Course;
-import com.example.programinglearningapp.ui.course.courseDetail;
-import com.example.programinglearningapp.ui.courseManagement.CourseManager_Create;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends Fragment implements CourseAdapter.OnCourseClickListener {
-    private RecyclerView recyclerViewCourses;
+public class HomeFragmentWronggg extends Fragment implements CourseAdapter.OnCourseClickListener{
+
+    private FragmentHomeBinding binding;
+    private RecyclerView recyclerViewHomeCourses;
     private CourseAdapter courseAdapter;
     private List<Course> courseList;
     private CourseHelper courseHelper;
 
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
         courseHelper = new CourseHelper(requireContext());
-        // Inflate the layout for this fragment and store it in 'view'
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        // Initialize RecyclerView
-        recyclerViewCourses = view.findViewById(R.id.recyclerViewCourses);
-        recyclerViewCourses.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        recyclerViewHomeCourses = view.findViewById(R.id.recyclerViewHomeCourses);
+        recyclerViewHomeCourses.setLayoutManager(new GridLayoutManager(getContext(), 2));
         courseList = new ArrayList<>();
         courseAdapter = new CourseAdapter(getContext(), courseList, this); // Pass 'this' as OnCourseClickListener
-        recyclerViewCourses.setAdapter(courseAdapter);
+        recyclerViewHomeCourses.setAdapter(courseAdapter);
 
         // Load course data
         loadCourses();
+
         return view;
     }
-
     private void loadCourses() {
         List<Course> newCourseList = courseHelper.getAllCourses();
-
+        Log.d("HomeFragment", "Number of courses: " + newCourseList.size());
         if (newCourseList != null) {
             courseList.clear(); // Clear the old data
             courseList.addAll(newCourseList); // Add new data
@@ -62,11 +58,13 @@ public class HomeFragment extends Fragment implements CourseAdapter.OnCourseClic
 
     @Override
     public void onCourseClick(Course course) {
-        // Navigate to CourseDetailActivity
-        Intent intent = new Intent(getActivity(), courseDetail.class);
-        intent.putExtra("courseTitle", course.getTitle());
-        intent.putExtra("courseDescription", course.getDescription());
-        intent.putExtra("courseImage", course.getImageUrl());
-        startActivity(intent);
+        // Handle course click here (optional)
+        // You could navigate to a Course Detail Activity if necessary
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }
