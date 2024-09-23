@@ -153,7 +153,6 @@ public class MemberManagementFragment extends Fragment {
                     intent.putExtra("dob", user.getDob());
                     intent.putExtra("role", user.getRole());
                     startActivityForResult(intent,REQUEST_CODE_EDIT);
-                    Toast.makeText(getContext(), "Selected User ID: " + selectedUserId, Toast.LENGTH_SHORT).show();
                 }
             });
             tableRow.addView(textViewUsername);
@@ -247,7 +246,6 @@ public class MemberManagementFragment extends Fragment {
                     intent.putExtra("dob", user.getDob());
                     intent.putExtra("role", user.getRole());
                     startActivityForResult(intent,REQUEST_CODE_EDIT);
-                    Toast.makeText(getContext(), "Selected User ID: " + selectedUserId, Toast.LENGTH_SHORT).show();
                 }
             });
             tableRow.addView(textViewUsername);

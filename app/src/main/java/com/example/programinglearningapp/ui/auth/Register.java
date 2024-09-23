@@ -2,6 +2,8 @@ package com.example.programinglearningapp.ui.auth;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.widget.Button;
@@ -34,18 +36,6 @@ public class Register extends AppCompatActivity {
         });
 
         dbHelper = new DatabaseHelper(this);
-
-        // Ghi thử dữ liệu vào bảng "users"
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("username", "test_user");
-        values.put("password", "test_password");
-        values.put("email", "testhiiii@example.com");
-        values.put("dob", "1990-01-01");
-
-        long newRowId = db.insert("users", null, values); // Thao tác ghi // Thao tác ghi
-        db.close();
-
         button_signIn = findViewById(R.id.button_signIn);
         button_signIn.setOnClickListener(v->{
             EditText editTextFullName = findViewById(R.id.editText_fullName);
@@ -59,9 +49,19 @@ public class Register extends AppCompatActivity {
             if(!fullname.isEmpty() && !email.isEmpty() && !password.isEmpty()) {
                 boolean isLoggedIn = dbHelper.registerUser(fullname,email, password);
                 if (isLoggedIn) {
-                    Toast.makeText(this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(Register.this, MainActivity.class);
-                    startActivity(i);
+                    Cursor cursor = dbHelper.loginUser(email, password);
+                    if (cursor.getCount() > 0) {
+                        cursor.moveToFirst();
+                        Toast.makeText(this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();
+                        int role = cursor.getInt(cursor.getColumnIndexOrThrow("role"));
+                        SharedPreferences sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putInt("user_role", role);
+                        editor.apply();
+                        Intent i = new Intent(Register.this, MainActivity.class);
+                        startActivity(i);
+                        cursor.close();
+                    }
                 } else {
                     Toast.makeText(this, "Email đã tồn tại", Toast.LENGTH_SHORT).show();
                 }
