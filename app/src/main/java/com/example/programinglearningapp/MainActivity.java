@@ -1,5 +1,6 @@
 package com.example.programinglearningapp;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
@@ -16,9 +17,11 @@ import android.view.MenuItem;
 import com.example.programinglearningapp.db.Course.CourseAdapter;
 import com.example.programinglearningapp.db.Course.CourseHelper;
 import com.example.programinglearningapp.model.Course;
+import com.example.programinglearningapp.ui.auth.Authentication;
 import com.example.programinglearningapp.ui.course.CourseListFragment;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -96,41 +99,6 @@ public class MainActivity extends AppCompatActivity {
             memberManagementItem.setVisible(false);
         }
 
-//        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//                int id = item.getItemId();
-//
-//                if (id == R.id.nav_member_management) {
-//                    // Mở MemberManagementActivity
-//                    Intent intent = new Intent(MainActivity.this, MemberManagement.class);
-//                    startActivity(intent);
-//                } else {
-//                    // Xử lý các mục khác
-//                    NavController navController = Navigation.findNavController(MainActivity.this, R.id.nav_host_fragment_content_main);
-//                    if (id == R.id.nav_home) {
-//                        navController.navigate(R.id.nav_home);
-//                    } else if (id == R.id.nav_infor_personal) {
-//                        navController.navigate(R.id.nav_infor_personal);
-//                    } else if (id == R.id.nav_infor_course) {
-//                        navController.navigate(R.id.nav_infor_course);
-//                    } else if (id == R.id.nav_course_management) {
-//                        navController.navigate(R.id.nav_course_management);
-////                        Intent intent = new Intent(MainActivity.this, course_management.class);
-////                        startActivity(intent);
-//
-//                    }else if (id == R.id.nav_course_management_admin) {
-//                        navController.navigate(R.id.nav_course_management_admin);
-//                    } else if (id == R.id.nav_log_out) {
-//                        // Xử lý đăng xuất
-//                    }
-//                }
-//
-//                DrawerLayout drawer = binding.drawerLayout;
-//                drawer.closeDrawer(GravityCompat.START);
-//                return true;
-//            }
-//        });
     }
 
 
