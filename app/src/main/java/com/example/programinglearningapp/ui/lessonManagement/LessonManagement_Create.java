@@ -1,6 +1,8 @@
-package com.example.programinglearningapp.ui.lesson;
+package com.example.programinglearningapp.ui.lessonManagement;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,21 +13,22 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
-import android.widget.TextView;
+import android.widget.Toast;
+
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.programinglearningapp.R;
+import com.example.programinglearningapp.db.DatabaseHelper;
+import com.google.gson.Gson;
 
 import jp.wasabeef.richeditor.RichEditor;
 
 public class LessonManagement_Create extends AppCompatActivity {
     private RichEditor mEditor;
     CheckBox quizCheckbox;
+    DatabaseHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +40,9 @@ public class LessonManagement_Create extends AppCompatActivity {
         LinearLayout quizCreationLayout = findViewById(R.id.quizCreationLayout);
         Button addQuestionButton = findViewById(R.id.addQuestionButton);
         LinearLayout questionContainer = findViewById(R.id.questionContainer);
+        Button saveLessonButton = findViewById(R.id.saveLesson);
+        // Khi bấm nút "Lưu"
+        saveLessonButton.setOnClickListener(v -> saveLesson(this));
 
         quizCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -54,7 +60,7 @@ public class LessonManagement_Create extends AppCompatActivity {
         addQuestionButton.setOnClickListener(v -> {
             // Inflate layout câu hỏi trắc nghiệm từ file XML
             LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View newQuestionView = inflater.inflate(R.layout.quiz_item, null);
+            View newQuestionView = inflater.inflate(R.layout.quiz_item_create, null);
 
             // Thêm layout mới này vào questionContainer
             questionContainer.addView(newQuestionView);
@@ -290,5 +296,90 @@ public class LessonManagement_Create extends AppCompatActivity {
                 mEditor.insertTodo();
             }
         });
+    }
+
+    private void saveLesson(Context context) {
+        String lessonContent = mEditor.getHtml();
+        String lessonTitle =  ((EditText) findViewById(R.id.lessonTitle)).getText().toString(); // Lấy từ EditText nhập tiêu đề
+
+        // Lưu bài học vào bảng lessons
+        long lessonId = saveLessonToDb(this,lessonTitle, lessonContent);
+        if (lessonId != -1) {
+            // Lưu câu hỏi trắc nghiệm
+            saveQuizQuestionsToDb(context,lessonId);
+
+        } else {
+            Toast.makeText(this, "Lưu bài học thất bại.", Toast.LENGTH_SHORT).show();
+        }
+
+
+    }
+
+    private long saveLessonToDb(Context context,String title, String content) {
+        dbHelper = new DatabaseHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("course_id", 1); // Lấy course_id hiện tại
+        values.put("title", title);
+        values.put("description", content);
+//        values.put("content", content); // Thêm giá trị cho content
+
+        long lessonId = db.insert("lessons", null, values);
+        db.close();
+        return lessonId;
+    }
+
+    // Hàm lưu câu hỏi trắc nghiệm vào bảng exams
+    private void saveQuizQuestionsToDb(Context context,long lessonId) {
+        LinearLayout questionContainer = findViewById(R.id.questionContainer);
+        int questionCount = questionContainer.getChildCount();
+
+        for (int i = 0; i < questionCount; i++) {
+            View questionView = questionContainer.getChildAt(i);
+
+            EditText questionEditText = questionView.findViewById(R.id.quizQuestion);
+            EditText answer1EditText = questionView.findViewById(R.id.answer1);
+            EditText answer2EditText = questionView.findViewById(R.id.answer2);
+            EditText answer3EditText = questionView.findViewById(R.id.answer3);
+            EditText answer4EditText = questionView.findViewById(R.id.answer4);
+            RadioGroup correctAnswerGroup = questionView.findViewById(R.id.correctAnswerGroup);
+
+            String question = questionEditText.getText().toString();
+            String[] options = {
+                    answer1EditText.getText().toString(),
+                    answer2EditText.getText().toString(),
+                    answer3EditText.getText().toString(),
+                    answer4EditText.getText().toString()
+            };
+
+            // Lấy đáp án đúng
+            int correctAnswerId = correctAnswerGroup.getCheckedRadioButtonId();
+            String correctAnswer = "";
+            if (correctAnswerId == R.id.correctAnswer1) correctAnswer = options[0];
+            else if (correctAnswerId == R.id.correctAnswer2) correctAnswer = options[1];
+            else if (correctAnswerId == R.id.correctAnswer3) correctAnswer = options[2];
+            else if (correctAnswerId == R.id.correctAnswer4) correctAnswer = options[3];
+
+            // Chuyển options thành chuỗi JSON
+            String optionsJson = new Gson().toJson(options);
+
+            // Lưu câu hỏi vào bảng exams
+            saveQuestionToDb(context,lessonId, question, optionsJson, correctAnswer);
+        }
+    }
+
+    // Hàm lưu từng câu hỏi vào bảng exams
+    private void saveQuestionToDb(Context context,long lessonId, String question, String optionsJson, String correctAnswer) {
+        dbHelper = new DatabaseHelper(context);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("lesson_id", lessonId);
+        values.put("question", question);
+        values.put("options", optionsJson);
+        values.put("correct_answer", correctAnswer);
+
+        db.insert("exams", null, values);
+        db.close();
+        Toast.makeText(this, "Bài học và câu hỏi trắc nghiệm đã được lưu!", Toast.LENGTH_SHORT).show();
     }
 }

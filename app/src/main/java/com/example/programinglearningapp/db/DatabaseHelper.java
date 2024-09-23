@@ -36,6 +36,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "course_id INTEGER," +
                 "title TEXT," +
                 "description TEXT," +
+                "content TEXT," +
                 "FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE CASCADE)");
 
         // Create exams table
