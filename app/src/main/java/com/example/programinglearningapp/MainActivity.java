@@ -1,7 +1,9 @@
 package com.example.programinglearningapp;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 
 import com.example.programinglearningapp.ui.course.CourseListFragment;
 import com.google.android.material.navigation.NavigationView;
@@ -48,6 +50,15 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        SharedPreferences sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE);
+        int role = sharedPreferences.getInt("user_role", 0);
+        Menu menu = navigationView.getMenu();
+        MenuItem memberManagementItem = menu.findItem(R.id.nav_member_management);
+
+        if (role != 1) {
+            memberManagementItem.setVisible(false);
+        }
 
 //        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 //            @Override
