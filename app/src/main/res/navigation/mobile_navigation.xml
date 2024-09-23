@@ -51,5 +51,5 @@
         android:id="@+id/nav_log_out"
         android:name="com.example.programinglearningapp.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_log_out"
-        tools:layout="@layout/fragment_slideshow" />
+        tools:layout="@layout/activity_authentication" />
 </navigation>

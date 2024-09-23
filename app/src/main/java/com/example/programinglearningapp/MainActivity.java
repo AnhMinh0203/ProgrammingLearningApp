@@ -1,6 +1,10 @@
 package com.example.programinglearningapp;
 
 import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+
 import static androidx.core.content.ContentProviderCompat.requireContext;
 
 import static java.security.AccessController.getContext;
@@ -62,14 +66,20 @@ public class MainActivity extends AppCompatActivity {
 //        loadCourses();
 
         setSupportActionBar(binding.appBarMain.toolbar);
-
+//        binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null)
+//                        .setAnchorView(R.id.fab).show();
+//            }
+//        });
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
-
-        // Set up the navigation controller
+        // Passing each menu ID as a set of Ids because each
+        // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_infor_personal, R.id.nav_course_management_user,
-                R.id.nav_member_management, R.id.nav_course_management_admin, R.id.nav_log_out)
+                R.id.nav_home, R.id.nav_infor_personal, R.id.nav_course_management_user, R.id.nav_member_management,R.id.nav_course_management_admin,R.id.nav_log_out)
                 .setOpenableLayout(drawer)
                 .build();
 
