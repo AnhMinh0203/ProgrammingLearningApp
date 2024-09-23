@@ -14,7 +14,7 @@
         android:layout_width="229dp"
         android:layout_height="52dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="128dp"
+        android:layout_marginTop="60dp"
         android:ems="10"
         android:hint="Nhập họ tên"
         android:inputType="text"
@@ -24,23 +24,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btn_search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="132dp"
-        android:layout_marginEnd="16dp"
-        android:text="Tìm kiếm"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <HorizontalScrollView
-        android:layout_width="405dp"
-        android:layout_height="492dp"
-        android:layout_marginTop="56dp"
+        android:layout_width="354dp"
+        android:layout_height="489dp"
+        android:layout_marginTop="52dp"
         android:fillViewport="true"
-        app:layout_constraintTop_toBottomOf="@+id/editText_fullName"
-        tools:layout_editor_absoluteX="3dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText_fullName">
 
         <!-- ScrollView để cuộn theo chiều dọc -->
         <ScrollView
@@ -53,6 +45,8 @@
                 android:id="@+id/tableLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 android:stretchColumns="1">
 
                 <TableRow android:id="@+id/header_row">
@@ -87,13 +81,13 @@
                         android:text="Quyền"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:padding="8dp"
-                        android:text="Actions"
-                        android:textStyle="bold" />
+                    <!--                    <TextView-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:gravity="center"-->
+                    <!--                        android:padding="8dp"-->
+                    <!--                        android:text="Actions"-->
+                    <!--                        android:textStyle="bold" />-->
                 </TableRow>
 
                 <!-- Thêm các hàng khác tại đây -->
@@ -101,5 +95,15 @@
             </TableLayout>
         </ScrollView>
     </HorizontalScrollView>
+
+    <Button
+        android:id="@+id/btn_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="16dp"
+        android:text="Tìm kiếm"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

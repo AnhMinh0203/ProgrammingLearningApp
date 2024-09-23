@@ -11,13 +11,106 @@
         android:id="@+id/textView2"
         android:layout_width="229dp"
         android:layout_height="32dp"
-        android:layout_marginTop="212dp"
-        android:text="Đăng ký vào F8"
+        android:layout_marginTop="164dp"
+        android:text="Đăng ký vào F9"
         android:textAlignment="center"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.461"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="230dp"
+        android:layout_height="67dp"
+        android:layout_marginTop="16dp"
+        android:text="Việc bạn tiếp tục sử dụng ứng dụng này đồng nghĩa bạn đồng ý với điều khoản sử dụng của chúng tôi."
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.464"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/IdUser" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Đăng nhập"
+        android:textColor="#F05123"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/IdUser"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintStart_toEndOf="@+id/IdUser"
+        app:layout_constraintTop_toTopOf="@+id/IdUser"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/IdUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="12dp"
+        android:text="Bạn đã có tài khoản?"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_signIn" />
+
+    <Button
+        android:id="@+id/button_signIn"
+        android:layout_width="233dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/button_background"
+        android:text="Đăng ký"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.449"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText_password" />
+
+    <EditText
+        android:id="@+id/editText_password"
+        android:layout_width="231dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="368dp"
+        android:ems="10"
+        android:hint="Nhập mật khẩu"
+        android:inputType="text"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.455"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editText_fullName"
+        android:layout_width="229dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="208dp"
+        android:ems="10"
+        android:hint="Nhập họ tên"
+        android:inputType="text"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.461"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editText_email"
+        android:layout_width="229dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="284dp"
+        android:ems="10"
+        android:hint="Nhập email"
+        android:inputType="text"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.45"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -32,99 +125,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.44"
         app:srcCompat="@drawable/logo" />
-
-    <EditText
-        android:id="@+id/editText_password"
-        android:layout_width="231dp"
-        android:layout_height="52dp"
-        android:layout_marginTop="432dp"
-        android:ems="10"
-        android:hint="Nhập mật khẩu"
-        android:inputType="text"
-        android:text=""
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.455"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="230dp"
-        android:layout_height="67dp"
-        android:layout_marginTop="24dp"
-        android:text="Việc bạn tiếp tục sử dụng ứng dụng này đồng nghĩa bạn đồng ý với điều khoản sử dụng của chúng tôi."
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.458"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/IdUser" />
-
-    <Button
-        android:id="@+id/button_signIn"
-        android:layout_width="233dp"
-        android:layout_height="43dp"
-        android:layout_marginTop="36dp"
-        android:background="@drawable/button_background"
-        android:text="Đăng ký"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.438"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_password" />
-
-    <TextView
-        android:id="@+id/IdUser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="56dp"
-        android:layout_marginTop="36dp"
-        android:text="Bạn đã có tài khoản?"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_signIn" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Đăng nhập"
-        android:textColor="#F05123"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/IdUser"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.137"
-        app:layout_constraintStart_toEndOf="@+id/IdUser"
-        app:layout_constraintTop_toTopOf="@+id/IdUser"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <EditText
-        android:id="@+id/editText_fullName"
-        android:layout_width="229dp"
-        android:layout_height="52dp"
-        android:layout_marginTop="272dp"
-        android:ems="10"
-        android:hint="Nhập họ tên"
-        android:inputType="text"
-        android:text=""
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.461"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/editText_email"
-        android:layout_width="229dp"
-        android:layout_height="52dp"
-        android:layout_marginTop="348dp"
-        android:ems="10"
-        android:hint="Nhập email"
-        android:inputType="text"
-        android:text=""
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.45"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/group"

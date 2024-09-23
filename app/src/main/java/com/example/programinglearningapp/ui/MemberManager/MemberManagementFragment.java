@@ -1,5 +1,7 @@
 package com.example.programinglearningapp.ui.MemberManager;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -31,6 +33,7 @@ import java.util.List;
 
 public class MemberManagementFragment extends Fragment {
 
+    private static final int REQUEST_CODE_EDIT = 100;
     private DatabaseHelper dbHelper;
     private List<User> userList;
     private TableLayout tableLayout;
@@ -58,6 +61,16 @@ public class MemberManagementFragment extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_CODE_EDIT && resultCode == RESULT_OK) {
+            // Gọi lại hàm loadAccounts() để tải lại danh sách người dùng
+            loadAccounts();
+        }
     }
 
     private void loadAccounts() {
@@ -98,7 +111,7 @@ public class MemberManagementFragment extends Fragment {
 
         TableRow.LayoutParams columnParams = new TableRow.LayoutParams(
                 0, TableRow.LayoutParams.WRAP_CONTENT, 1f); // Equal weight for all columns
-
+        final TableRow[] selectedRow = {null};
         for (User user : userList) {
             TableRow tableRow = new TableRow(getContext());
 
@@ -119,69 +132,40 @@ public class MemberManagementFragment extends Fragment {
             textViewRole.setPadding(8, 8, 8, 8);
             textViewRole.setGravity(Gravity.CENTER);
             textViewRole.setLayoutParams(columnParams);
+            tableRow.setTag(user.getId());
 
-            // Set fixed width for buttons to maintain alignment
-            TableRow.LayoutParams buttonParams = new TableRow.LayoutParams(
-                    0, TableRow.LayoutParams.WRAP_CONTENT, 1f);
-            buttonParams.setMargins(8, 8, 8, 8); // Optional: add some margin between buttons
+            tableRow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Đổi màu hàng được bấm
+                    if (selectedRow[0] != null) {
+                        selectedRow[0].setBackgroundColor(0x00000000);
+                    }
+                    selectedRow[0] = tableRow;
+                    tableRow.setBackgroundColor(0xFFDDDDDD);
 
-            Button buttonEdit = new Button(getContext());
-            buttonEdit.setText("EDIT");
-            buttonEdit.setLayoutParams(buttonParams);
-            buttonEdit.setOnClickListener(v -> {
-                Intent intent = new Intent(getActivity(), MemberManagementEdit.class);
-                intent.putExtra("userId", user.getId());
-                intent.putExtra("username", user.getUsername());
-                intent.putExtra("email", user.getEmail());
-                intent.putExtra("dob", user.getDob());
-                intent.putExtra("role", user.getRole());
-
-                Bundle bundle = new Bundle();
-                bundle.putInt("userId", user.getId());
-                bundle.putString("username", user.getUsername());
-                bundle.putString("email", user.getEmail());
-                bundle.putString("dob", user.getDob());
-                bundle.putInt("role", user.getRole());
-                startActivity(intent,bundle);
+                    // Lấy ID của hàng được bấm
+                    int selectedUserId = (int) tableRow.getTag();
+                    Intent intent = new Intent(getActivity(), MemberManagementEdit.class);
+                    intent.putExtra("userId", user.getId());
+                    intent.putExtra("username", user.getUsername());
+                    intent.putExtra("email", user.getEmail());
+                    intent.putExtra("dob", user.getDob());
+                    intent.putExtra("role", user.getRole());
+                    startActivityForResult(intent,REQUEST_CODE_EDIT);
+                }
             });
-
-            Button buttonDelete = new Button(getContext());
-            buttonDelete.setText("DELETE");
-            buttonDelete.setLayoutParams(buttonParams);
-            buttonDelete.setOnClickListener(v -> {
-                Delete(user.getId());
-            });
-
-            // Add the components to the row
             tableRow.addView(textViewUsername);
             tableRow.addView(textViewEmail);
             tableRow.addView(textViewRole);
-            tableRow.addView(buttonEdit);
-            tableRow.addView(buttonDelete);
-
-            // Add the row to the table
             tableLayout.addView(tableRow);
         }
 
     }
 
-    private void Delete(int userId) {
-        new AlertDialog.Builder(getContext())
-                .setTitle("Xác nhận")
-                .setMessage("Bạn có chắc chắn không?")
-                .setPositiveButton("Có", (dialog, which) -> {
-                    SQLiteDatabase db = dbHelper.getWritableDatabase();
-                    db.delete("users", "id = ?", new String[]{String.valueOf(userId)});
-                    db.close();
-                    Toast.makeText(getContext(), "User deleted", Toast.LENGTH_SHORT).show();
-                    loadAccounts();
-                })
-                .setNegativeButton("Không", null)
-                .show();
-    }
+
 
     public void searchUsersByName(String name) {
-        TableLayout tableLayout = view.findViewById(R.id.tableLayout);
         int headerId = R.id.header_row;  // Thay thế bằng ID thực tế của header row nếu cần
 
         // Lấy số lượng các hàng trong TableLayout
@@ -218,76 +202,55 @@ public class MemberManagementFragment extends Fragment {
         }
         cursor.close();
         db.close();
+        TableRow.LayoutParams columnParams = new TableRow.LayoutParams(
+                0, TableRow.LayoutParams.WRAP_CONTENT, 1f); // Equal weight for all columns
+        final TableRow[] selectedRow = {null};
         for (User user : userList) {
             TableRow tableRow = new TableRow(getContext());
 
             TextView textViewUsername = new TextView(getContext());
             textViewUsername.setText(user.getUsername());
             textViewUsername.setPadding(8, 8, 8, 8);
-            textViewUsername.setGravity(View.TEXT_ALIGNMENT_CENTER);
-            // Giảm kích thước font
-            textViewUsername.setTextSize(12);  // Ví dụ kích thước 12sp
-            // Cho phép tự động xuống dòng nếu văn bản dài
-            textViewUsername.setSingleLine(false);
-            textViewUsername.setMaxLines(3);  // Tối đa 3 dòng
-            textViewUsername.setEllipsize(null);  // Không có dấu "..." khi xuống dòng
+            textViewUsername.setGravity(Gravity.CENTER);
+            textViewUsername.setLayoutParams(columnParams);
 
             TextView textViewEmail = new TextView(getContext());
             textViewEmail.setText(user.getEmail());
             textViewEmail.setPadding(8, 8, 8, 8);
-            textViewEmail.setGravity(View.TEXT_ALIGNMENT_CENTER);
-            // Giảm kích thước font
-            textViewEmail.setTextSize(12);  // Ví dụ kích thước 12sp
-            // Cho phép tự động xuống dòng nếu văn bản dài
-            textViewEmail.setSingleLine(false);
-            textViewEmail.setMaxLines(3);  // Tối đa 3 dòng
-            textViewEmail.setEllipsize(null);  // Không có dấu "..." khi xuống dòng
+            textViewEmail.setGravity(Gravity.CENTER);
+            textViewEmail.setLayoutParams(columnParams);
 
             TextView textViewRole = new TextView(getContext());
-            int role = user.getRole();
-            if(role == 1) textViewRole.setText("Admin");
-            else textViewRole.setText("User");
+            textViewRole.setText(user.getRole() == 1 ? "Admin" : "User");
             textViewRole.setPadding(8, 8, 8, 8);
-            textViewRole.setGravity(View.TEXT_ALIGNMENT_CENTER);
-            // Giảm kích thước font
-            textViewRole.setTextSize(12);  // Ví dụ kích thước 12sp
-            // Cho phép tự động xuống dòng nếu văn bản dài
-            textViewRole.setSingleLine(false);
-            textViewRole.setMaxLines(3);  // Tối đa 3 dòng
-            textViewRole.setEllipsize(null);  // Không có dấu "..." khi xuống dòng
+            textViewRole.setGravity(Gravity.CENTER);
+            textViewRole.setLayoutParams(columnParams);
+            tableRow.setTag(user.getId());
 
-            Button buttonEdit = new Button(getContext());
-            buttonEdit.setText("Edit");
-            buttonEdit.setTextSize(12);  // Ví dụ kích thước 12sp
-            // Điều chỉnh kích thước của Button
-            TableRow.LayoutParams paramsEdit = new TableRow.LayoutParams(
-                    TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT
-            );
-            buttonEdit.setLayoutParams(paramsEdit);
-            buttonEdit.setOnClickListener(v -> {
-                Delete(user.getId());
-                loadAccounts();
+            tableRow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Đổi màu hàng được bấm
+                    if (selectedRow[0] != null) {
+                        selectedRow[0].setBackgroundColor(0x00000000);
+                    }
+                    selectedRow[0] = tableRow;
+                    tableRow.setBackgroundColor(0xFFDDDDDD);
+
+                    // Lấy ID của hàng được bấm
+                    int selectedUserId = (int) tableRow.getTag();
+                    Intent intent = new Intent(getActivity(), MemberManagementEdit.class);
+                    intent.putExtra("userId", user.getId());
+                    intent.putExtra("username", user.getUsername());
+                    intent.putExtra("email", user.getEmail());
+                    intent.putExtra("dob", user.getDob());
+                    intent.putExtra("role", user.getRole());
+                    startActivityForResult(intent,REQUEST_CODE_EDIT);
+                }
             });
-
-            Button buttonDelete = new Button(getContext());
-            buttonDelete.setText("Delete");
-            buttonDelete.setTextSize(12);  // Ví dụ kích thước 12sp
-            // Điều chỉnh kích thước của Button
-            TableRow.LayoutParams paramsDelete = new TableRow.LayoutParams(
-                    TableRow.LayoutParams.WRAP_CONTENT,
-                    TableRow.LayoutParams.WRAP_CONTENT
-            );
-            buttonDelete.setLayoutParams(paramsDelete);
-            buttonDelete.setOnClickListener(v -> {
-                Delete(user.getId());
-            });
-
             tableRow.addView(textViewUsername);
             tableRow.addView(textViewEmail);
             tableRow.addView(textViewRole);
-            tableRow.addView(buttonEdit);
-            tableRow.addView(buttonDelete);
             tableLayout.addView(tableRow);
         }
     }
