@@ -7,13 +7,10 @@ import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.programinglearningapp.R;
 import com.example.programinglearningapp.model.Course;
-import com.example.programinglearningapp.ui.lesson.LessonManager_Create;
+import com.example.programinglearningapp.ui.lesson.LessonManagement_Create;
 
 public class courseDetail extends AppCompatActivity {
     private TextView courseTitle, courseDescription;
@@ -47,7 +44,8 @@ public class courseDetail extends AppCompatActivity {
 
         createLessonElement.setOnClickListener(v -> {
             // Open a new activity or view for creating a lesson
-            Intent createLessonIntent = new Intent(courseDetail.this, LessonManager_Create.class);
+            int a  = 1;
+            Intent createLessonIntent = new Intent(courseDetail.this, LessonManagement_Create.class);
             startActivity(createLessonIntent);
         });
     }
