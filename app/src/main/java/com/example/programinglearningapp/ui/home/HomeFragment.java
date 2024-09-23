@@ -18,6 +18,7 @@ import com.example.programinglearningapp.db.Course.CourseHelper;
 import com.example.programinglearningapp.model.Course;
 import com.example.programinglearningapp.ui.course.courseDetail;
 import com.example.programinglearningapp.ui.courseManagement.CourseManager_Create;
+import com.example.programinglearningapp.ui.lesson.lessonDetail;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -63,7 +64,7 @@ public class HomeFragment extends Fragment implements CourseAdapter.OnCourseClic
     @Override
     public void onCourseClick(Course course) {
         // Navigate to CourseDetailActivity
-        Intent intent = new Intent(getActivity(), courseDetail.class);
+        Intent intent = new Intent(getActivity(), lessonDetail.class);
         intent.putExtra("courseTitle", course.getTitle());
         intent.putExtra("courseDescription", course.getDescription());
         intent.putExtra("courseImage", course.getImageUrl());

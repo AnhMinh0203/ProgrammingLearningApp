@@ -50,9 +50,11 @@ dependencies {
     annotationProcessor(libs.compiler)
 
     // Thêm thư viện RTE cho nội dung bài học
-//    implementation(libs.android.rteditor)
     implementation (libs.richeditor.android)
-//    implementation(libs.richeditor.compose)
+//    Chuỗi Json
+    implementation(libs.gson)
+//    Recycle view
+    implementation (libs.recyclerview)
     // Phụ thuộc cho unit test và UI test
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

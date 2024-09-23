@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.programinglearningapp.R;
 import com.example.programinglearningapp.model.Course;
-import com.example.programinglearningapp.ui.lesson.LessonManagement_Create;
+import com.example.programinglearningapp.ui.lessonManagement.LessonManagement_Create;
 
 public class courseDetail extends AppCompatActivity {
     private TextView courseTitle, courseDescription;

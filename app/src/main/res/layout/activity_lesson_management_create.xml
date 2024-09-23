@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    tools:context=".ui.lesson.LessonManagement_Create">
+    tools:context=".ui.lessonManagement.LessonManagement_Create">
     <LinearLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
