@@ -25,7 +25,7 @@ import java.util.List;
 
 public class lessonDetail extends AppCompatActivity {
 
-    private TextView tvLessonTitle, tvLessonContent;
+    private TextView tvLessonTitle, tvLessonContent,idCourse,idLesson;
     private RecyclerView rvQuiz;
     private QuizAdapter quizAdapter;
 
@@ -39,11 +39,17 @@ public class lessonDetail extends AppCompatActivity {
         tvLessonContent = findViewById(R.id.tvLessonContent);
         rvQuiz = findViewById(R.id.rvQuiz);
 
-        // Lấy dữ liệu từ Intent hoặc Database
+        // Lấy dữ liệu từ Intent
+        int lessonId = getIntent().getIntExtra("LESSON_ID", -1); // Get the lesson ID
+        int courseId = getIntent().getIntExtra("COURSE_ID", -1); // Get the course ID if needed        // Lấy dữ liệu từ Intent hoặc Database
         // Example data
         String lessonTitle = "Tiêu đề bài học";
-        String lessonContent = "<b><i>this is test lesson</i></b>";
-        String quizJson = "[{\"question\":\"This is question?\",\"options\":[\"Option 1\",\"Option 2\",\"Option 3\",\"Option 4\"]}]";
+        String lessonContent = "<b><i>Nội dung bai học</i></b>";
+        String quizJson = "[{\"question\":\"Câu hỏi\",\"options\":[\"Option 1\",\"Option 2\",\"Option 3\",\"Option 4\"]}]";
+        idCourse = findViewById(R.id.idCourse);
+        idLesson = findViewById(R.id.idLesson);
+        idCourse.setText(String.valueOf(courseId));
+        idLesson.setText(String.valueOf(lessonId));
 
         // Hiển thị dữ liệu
         displayLessonData(lessonTitle, lessonContent, quizJson);

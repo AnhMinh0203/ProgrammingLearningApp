@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.programinglearningapp.R;
 import com.example.programinglearningapp.db.DatabaseHelper;
+import com.example.programinglearningapp.ui.course.courseDetail;
 import com.google.gson.Gson;
 
 import jp.wasabeef.richeditor.RichEditor;
@@ -319,7 +320,8 @@ public class LessonManagement_Create extends AppCompatActivity {
         dbHelper = new DatabaseHelper(context);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("course_id", 1); // Lấy course_id hiện tại
+        String idCourse = courseDetail.courseId;
+        values.put("course_id", idCourse); // Lấy course_id hiện tại
         values.put("title", title);
         values.put("description", content);
 //        values.put("content", content); // Thêm giá trị cho content
