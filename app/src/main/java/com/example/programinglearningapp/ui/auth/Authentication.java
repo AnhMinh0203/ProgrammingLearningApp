@@ -32,10 +32,11 @@ public class Authentication extends AppCompatActivity {
             String password = editTextPassword.getText().toString();
 
             if(!email.isEmpty() && !password.isEmpty()) {
-                boolean isLoggedIn = dbHelper.loginUser(email, password);
-                if (isLoggedIn) {
+                String role = dbHelper.getUserRole(email, password);
+                if (role != null) {
                     Toast.makeText(this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(Authentication.this, MainActivity.class);
+                    i.putExtra("userRole", role);  // Truyền vai trò người dùng
                     startActivity(i);
                 } else {
                     Toast.makeText(this, "Sai email hoặc mật khẩu", Toast.LENGTH_SHORT).show();
@@ -44,7 +45,6 @@ public class Authentication extends AppCompatActivity {
             else {
                 Toast.makeText(this, "Vui lòng điền đầy đủ thông tin", Toast.LENGTH_SHORT).show();
             }
-
         });
 
         TextView textView4 = findViewById(R.id.textView4);

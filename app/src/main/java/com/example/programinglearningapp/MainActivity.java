@@ -4,6 +4,7 @@ import static androidx.core.content.ContentProviderCompat.requireContext;
 
 import static java.security.AccessController.getContext;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -11,7 +12,9 @@ import android.view.Menu;
 import com.example.programinglearningapp.db.Course.CourseAdapter;
 import com.example.programinglearningapp.db.Course.CourseHelper;
 import com.example.programinglearningapp.model.Course;
+import com.example.programinglearningapp.ui.auth.Authentication;
 import com.example.programinglearningapp.ui.course.CourseListFragment;
+import com.example.programinglearningapp.ui.course.courseDetail;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.fragment.app.Fragment;
@@ -45,36 +48,40 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // Initialize CourseHelper with the current Activity context
-//        courseHelper = new CourseHelper(this);
-
-        // Set up RecyclerView
-//        recyclerViewHomeCourses = binding.recyclerViewHomeCourses;
-//        recyclerViewHomeCourses.setLayoutManager(new GridLayoutManager(this, 2));
-//        courseList = new ArrayList<>();
-
-        // Initialize CourseAdapter with Activity context and OnCourseClickListener
-//        courseAdapter = new CourseAdapter(this, courseList, this);
-//        recyclerViewHomeCourses.setAdapter(courseAdapter);
-
-        // Load courses from the database
-//        loadCourses();
+        // Nhận vai trò của người dùng từ Intent
+        String userRole = getIntent().getStringExtra("userRole");
 
         setSupportActionBar(binding.appBarMain.toolbar);
 
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
 
-        // Set up the navigation controller
+        // Cấu hình điều hướng dựa trên vai trò người dùng
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_infor_personal, R.id.nav_course_management_user,
-                R.id.nav_member_management, R.id.nav_course_management_admin, R.id.nav_log_out)
+                R.id.nav_log_out) // Chỉ hiển thị các mục này cho user
                 .setOpenableLayout(drawer)
                 .build();
+
+        if (userRole.equals("0")) {
+            // Nếu người dùng là admin, thêm các mục điều hướng quản lý
+            mAppBarConfiguration = new AppBarConfiguration.Builder(
+                    R.id.nav_home, R.id.nav_infor_personal, R.id.nav_course_management_user,
+                    R.id.nav_member_management, R.id.nav_course_management_admin, R.id.nav_log_out)
+                    .setOpenableLayout(drawer)
+                    .build();
+
+        } else {
+            // Ẩn mục dành cho admin nếu vai trò là user
+            Menu menu = navigationView.getMenu();
+            menu.findItem(R.id.nav_member_management).setVisible(false);
+            menu.findItem(R.id.nav_course_management_admin).setVisible(false);
+        }
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
     }
 
 
