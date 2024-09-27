@@ -2,6 +2,7 @@ package com.example.programinglearningapp.ui.lessonManagement;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -18,11 +19,18 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.programinglearningapp.R;
 import com.example.programinglearningapp.db.DatabaseHelper;
+import com.example.programinglearningapp.db.lesson.QuizAdapter;
+import com.example.programinglearningapp.model.Quiz;
 import com.example.programinglearningapp.ui.course.courseDetail;
 import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import jp.wasabeef.richeditor.RichEditor;
 
@@ -30,6 +38,11 @@ public class LessonManagement_Create extends AppCompatActivity {
     private RichEditor mEditor;
     CheckBox quizCheckbox;
     DatabaseHelper dbHelper;
+    int UpdateLessonId;
+
+    private RecyclerView rvQuizEditor;
+    private QuizAdapter quizAdapter;
+    private List<Quiz> quizList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,11 +50,15 @@ public class LessonManagement_Create extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_lesson_management_create);
 
+        mEditor = (RichEditor) findViewById(R.id.editor);
         quizCheckbox = findViewById(R.id.quizCheckbox);
         LinearLayout quizCreationLayout = findViewById(R.id.quizCreationLayout);
         Button addQuestionButton = findViewById(R.id.addQuestionButton);
         LinearLayout questionContainer = findViewById(R.id.questionContainer);
         Button saveLessonButton = findViewById(R.id.saveLesson);
+
+        Intent intent = getIntent();
+
         // Khi bấm nút "Lưu"
         saveLessonButton.setOnClickListener(v -> saveLesson(this));
 
@@ -49,15 +66,14 @@ public class LessonManagement_Create extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    quizCreationLayout.setVisibility(View.VISIBLE);
+//                    quizCreationLayout.setVisibility(View.VISIBLE);
                     addQuestionButton.setVisibility(View.VISIBLE);
                 } else {
-                    quizCreationLayout.setVisibility(View.GONE);
+//                    quizCreationLayout.setVisibility(View.GONE);
                     addQuestionButton.setVisibility(View.GONE);
                 }
             }
         });
-
         addQuestionButton.setOnClickListener(v -> {
             // Inflate layout câu hỏi trắc nghiệm từ file XML
             LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -73,9 +89,6 @@ public class LessonManagement_Create extends AppCompatActivity {
 
             // Bạn có thể lấy dữ liệu từ các EditText và RadioButton này khi cần.
         });
-
-
-        mEditor = (RichEditor) findViewById(R.id.editor);
         mEditor.setEditorHeight(200);
         mEditor.setEditorFontSize(16);
         mEditor.setPadding(10, 10, 10, 10);
@@ -301,19 +314,26 @@ public class LessonManagement_Create extends AppCompatActivity {
 
     private void saveLesson(Context context) {
         String lessonContent = mEditor.getHtml();
-        String lessonTitle =  ((EditText) findViewById(R.id.lessonTitle)).getText().toString(); // Lấy từ EditText nhập tiêu đề
-
-        // Lưu bài học vào bảng lessons
-        long lessonId = saveLessonToDb(this,lessonTitle, lessonContent);
+        String lessonTitle = ((EditText) findViewById(R.id.lessonTitle)).getText().toString();
+// Logic for adding a new lesson
+        long lessonId = saveLessonToDb(this, lessonTitle, lessonContent);
         if (lessonId != -1) {
-            // Lưu câu hỏi trắc nghiệm
-            saveQuizQuestionsToDb(context,lessonId);
-
+            saveQuizQuestionsToDb(context, lessonId);
         } else {
             Toast.makeText(this, "Lưu bài học thất bại.", Toast.LENGTH_SHORT).show();
         }
-
-
+//        if ("add".equals(status)) {
+//
+//        } else if ("update".equals(status)) {
+//            // Logic for updating an existing lesson
+//            // You need to get the lessonId to update; you can pass it via Intent as well
+//            if (UpdateLessonId != -1) {
+//                updateLessonInDb(context, UpdateLessonId, lessonTitle, lessonContent);
+//                updateQuizQuestionsInDb(context, UpdateLessonId);
+//            } else {
+//                Toast.makeText(this, "Cập nhật bài học thất bại.", Toast.LENGTH_SHORT).show();
+//            }
+//        }
     }
 
     private long saveLessonToDb(Context context,String title, String content) {
@@ -330,6 +350,28 @@ public class LessonManagement_Create extends AppCompatActivity {
         db.close();
         return lessonId;
     }
+//Update
+private void updateLessonInDb(Context context, long lessonId, String title, String content) {
+    dbHelper = new DatabaseHelper(context);
+    SQLiteDatabase db = dbHelper.getWritableDatabase();
+    ContentValues values = new ContentValues();
+    values.put("title", title);
+    values.put("description", content);
+
+    int rowsAffected = db.update("lessons", values, "id = ?", new String[]{String.valueOf(lessonId)});
+    db.close();
+    if (rowsAffected > 0) {
+        Toast.makeText(context, "Bài học đã được cập nhật!", Toast.LENGTH_SHORT).show();
+    }
+}
+
+    // Method to update quiz questions
+    private void updateQuizQuestionsInDb(Context context, long lessonId) {
+        // Implement logic to update quiz questions based on your requirement
+        // This might include deleting existing questions and adding new ones,
+        // or just updating the existing records based on your needs
+    }
+
 
     // Hàm lưu câu hỏi trắc nghiệm vào bảng exams
     private void saveQuizQuestionsToDb(Context context,long lessonId) {
