@@ -99,7 +99,6 @@ public class lessonHelper {
                 e.printStackTrace();
             }
         }
-
         return correctIndex; // Trả về vị trí đáp án đúng (hoặc -1 nếu không tìm thấy)
     }
 }

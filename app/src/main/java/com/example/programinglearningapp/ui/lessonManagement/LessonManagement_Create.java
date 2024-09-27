@@ -57,8 +57,6 @@ public class LessonManagement_Create extends AppCompatActivity {
         LinearLayout questionContainer = findViewById(R.id.questionContainer);
         Button saveLessonButton = findViewById(R.id.saveLesson);
 
-        Intent intent = getIntent();
-
         // Khi bấm nút "Lưu"
         saveLessonButton.setOnClickListener(v -> saveLesson(this));
 
@@ -315,25 +313,13 @@ public class LessonManagement_Create extends AppCompatActivity {
     private void saveLesson(Context context) {
         String lessonContent = mEditor.getHtml();
         String lessonTitle = ((EditText) findViewById(R.id.lessonTitle)).getText().toString();
-// Logic for adding a new lesson
+        // Logic for adding a new lesson
         long lessonId = saveLessonToDb(this, lessonTitle, lessonContent);
         if (lessonId != -1) {
             saveQuizQuestionsToDb(context, lessonId);
         } else {
             Toast.makeText(this, "Lưu bài học thất bại.", Toast.LENGTH_SHORT).show();
         }
-//        if ("add".equals(status)) {
-//
-//        } else if ("update".equals(status)) {
-//            // Logic for updating an existing lesson
-//            // You need to get the lessonId to update; you can pass it via Intent as well
-//            if (UpdateLessonId != -1) {
-//                updateLessonInDb(context, UpdateLessonId, lessonTitle, lessonContent);
-//                updateQuizQuestionsInDb(context, UpdateLessonId);
-//            } else {
-//                Toast.makeText(this, "Cập nhật bài học thất bại.", Toast.LENGTH_SHORT).show();
-//            }
-//        }
     }
 
     private long saveLessonToDb(Context context,String title, String content) {
@@ -344,34 +330,11 @@ public class LessonManagement_Create extends AppCompatActivity {
         values.put("course_id", idCourse); // Lấy course_id hiện tại
         values.put("title", title);
         values.put("description", content);
-//        values.put("content", content); // Thêm giá trị cho content
 
         long lessonId = db.insert("lessons", null, values);
         db.close();
         return lessonId;
     }
-//Update
-private void updateLessonInDb(Context context, long lessonId, String title, String content) {
-    dbHelper = new DatabaseHelper(context);
-    SQLiteDatabase db = dbHelper.getWritableDatabase();
-    ContentValues values = new ContentValues();
-    values.put("title", title);
-    values.put("description", content);
-
-    int rowsAffected = db.update("lessons", values, "id = ?", new String[]{String.valueOf(lessonId)});
-    db.close();
-    if (rowsAffected > 0) {
-        Toast.makeText(context, "Bài học đã được cập nhật!", Toast.LENGTH_SHORT).show();
-    }
-}
-
-    // Method to update quiz questions
-    private void updateQuizQuestionsInDb(Context context, long lessonId) {
-        // Implement logic to update quiz questions based on your requirement
-        // This might include deleting existing questions and adding new ones,
-        // or just updating the existing records based on your needs
-    }
-
 
     // Hàm lưu câu hỏi trắc nghiệm vào bảng exams
     private void saveQuizQuestionsToDb(Context context,long lessonId) {

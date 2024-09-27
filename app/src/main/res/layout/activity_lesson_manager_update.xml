@@ -363,7 +363,7 @@
 
         <!-- CheckBox tạo bài thi trắc nghiệm -->
         <CheckBox
-            android:id="@+id/quizCheckbox"
+            android:id="@+id/quizCheckboxUpdate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Tạo bài thi trắc nghiệm"
@@ -479,17 +479,17 @@
             android:orientation="vertical"
             android:layout_marginTop="16dp" />
         <Button
-            android:id="@+id/addQuestionButton"
+            android:id="@+id/addQuestionButtonUpdate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"
             android:text="Tạo thêm câu hỏi trắc nghiệm"
             android:layout_marginTop="16dp" />
         <Button
-            android:id="@+id/saveLesson"
+            android:id="@+id/updateLesson"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Lưu"
+            android:text="Cập nhật"
             android:layout_marginTop="16dp" />
 
     </LinearLayout>
