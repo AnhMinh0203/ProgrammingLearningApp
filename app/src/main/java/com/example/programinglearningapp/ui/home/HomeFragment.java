@@ -1,6 +1,8 @@
 package com.example.programinglearningapp.ui.home;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -44,7 +46,6 @@ public class HomeFragment extends Fragment implements CourseAdapter.OnCourseClic
         courseList = new ArrayList<>();
         courseAdapter = new CourseAdapter(getContext(), courseList, this); // Pass 'this' as OnCourseClickListener
         recyclerViewCourses.setAdapter(courseAdapter);
-
         // Load course data
         loadCourses();
         return view;
@@ -69,6 +70,7 @@ public class HomeFragment extends Fragment implements CourseAdapter.OnCourseClic
         intent.putExtra("courseTitle", course.getTitle());
         intent.putExtra("courseDescription", course.getDescription());
         intent.putExtra("courseImage", course.getImageUrl());
+        intent.putExtra("courseId", course.getId());
         startActivity(intent);
     }
 }

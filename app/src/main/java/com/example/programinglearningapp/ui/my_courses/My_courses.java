@@ -35,9 +35,14 @@ public class My_courses extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_my_courses);
+//        setContentView(R.layout.activity_my_courses);
+
         dbHelper = new DatabaseHelper(this);
+        courseHelper = new CourseHelper(this);  // Khởi tạo CourseHelper
+
         courseRegistered = findViewById(R.id.courseRegistered);
+
+        loadCourses();
 
 //         Ghi thử dữ liệu vào bảng "courses"
 //        SQLiteDatabase db = dbHelper.getWritableDatabase();
@@ -49,22 +54,20 @@ public class My_courses extends AppCompatActivity {
 
 //        SQLiteDatabase db = dbHelper.getWritableDatabase();
 //        String whereClause = "user_id = ? AND course_id = ?";
-//        String[] whereArgs = new String[] { "1", "3" };
+//        String[] whereArgs = new String[] { "-1", "2" };
 //        int rowsDeleted = db.delete("user_courses", whereClause, whereArgs);
 //        db.close();
-
-        loadCourses();
     }
 
     private void loadCourses() {
-        List<Course> myCourseList = courseHelper.getCoursesRegisterForUser(1);
+        List<Course> myCourseList = courseHelper.getCoursesRegisterForUser(2);
 
         if (myCourseList != null) {
-            courseList.clear(); // Clear the old data
-            courseList.addAll(myCourseList); // Add new data
-            courseAdapter.notifyDataSetChanged(); // Notify the adapter that the data has changed
+            courseList.clear();
+            courseList.addAll(myCourseList);
+            courseAdapter.notifyDataSetChanged();
         } else {
-            Log.e("CourseManagementFragment", "Failed to load courses: newCourseList is null");
+            Log.e("MyCourses", "Failed to load courses: newCourseList is null");
         }
     }
 

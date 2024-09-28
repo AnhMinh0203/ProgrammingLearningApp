@@ -117,4 +117,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return null;
     }
+
+    public String getUserId(String email, String password) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT id FROM users WHERE email = ? AND password = ?", new String[]{email, password});
+        if (cursor.moveToFirst()) {
+            return cursor.getString(0);  // Trả về userId
+        }
+        return null;
+    }
 }

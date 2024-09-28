@@ -89,4 +89,28 @@ public class RegisterCourse {
         // Trả về cursor rỗng nếu không tìm thấy
         return null;
     }
+
+    public boolean registerCourse(int userId, int courseId) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        // Kiểm tra xem khóa học đã được đăng ký chưa
+        String query = "SELECT * FROM user_courses WHERE user_id = ? AND course_id = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(userId), String.valueOf(courseId)});
+
+        if (cursor.getCount() > 0) {
+            // Khóa học đã được đăng ký
+            cursor.close();
+            return false; // Đăng ký thất bại
+        }
+
+        cursor.close();
+
+        // Nếu khóa học chưa được đăng ký, thêm mới
+        ContentValues values = new ContentValues();
+        values.put("user_id", userId);
+        values.put("course_id", courseId);
+
+        long result = db.insert("user_courses", null, values);
+        return result != -1; // Trả về true nếu thêm thành công
+    }
 }

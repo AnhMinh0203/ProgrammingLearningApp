@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Nhận vai trò của người dùng từ Intent
         String userRole = getIntent().getStringExtra("userRole");
+        String userId = getIntent().getStringExtra("user_id");
 
         setSupportActionBar(binding.appBarMain.toolbar);
 

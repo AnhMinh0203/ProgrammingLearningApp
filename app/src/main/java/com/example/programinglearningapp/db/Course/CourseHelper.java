@@ -66,7 +66,7 @@ public class CourseHelper {
 
     public List<Course> getCoursesRegisterForUser (int user_id){
         List<Course> courses = new ArrayList<>();
-        String query = "SELECT courses.course_name, courses.description, courses.img " +
+        String query = "SELECT courses.id, courses.course_name, courses.description, courses.img " +
                 "FROM user_courses " +
                 "JOIN courses ON user_courses.course_id = courses.id " +
                 "WHERE user_courses.user_id = ?";
