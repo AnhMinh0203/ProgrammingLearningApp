@@ -34,6 +34,7 @@ public class Authentication extends AppCompatActivity {
             if(!email.isEmpty() && !password.isEmpty()) {
                 boolean isLoggedIn = dbHelper.loginUser(email, password);
                 if (isLoggedIn) {
+                    // Viet ham lấy role ở dây
                     Toast.makeText(this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(Authentication.this, MainActivity.class);
                     startActivity(i);
