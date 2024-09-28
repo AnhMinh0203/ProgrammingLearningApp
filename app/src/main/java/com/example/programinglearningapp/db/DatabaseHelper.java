@@ -93,20 +93,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result != -1; // Trả về true nếu thêm thành công
     }
 
-    public boolean loginUser(String email, String password) {
+    public Cursor loginUser(String email, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         // Truy vấn kiểm tra tên người dùng và mật khẩu
         String query = "SELECT * FROM users WHERE email = ? AND password = ?";
         Cursor cursor = db.rawQuery(query, new String[]{email, password});
 
-        if (cursor.getCount() > 0) {
-            cursor.close();
-            return true; // Đăng nhập thành công
-        }
-
-        cursor.close();
-        return false; // Đăng nhập thất bại
+        return cursor;
     }
 
     public String getUserRole(String email, String password) {

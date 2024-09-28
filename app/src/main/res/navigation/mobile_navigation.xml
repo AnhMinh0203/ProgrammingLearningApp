@@ -23,6 +23,12 @@
         android:label="@string/menu_infor_course"
         tools:layout="@layout/fragment_course_management" />
 
+    <!--    <fragment-->
+    <!--        android:id="@+id/nav_course_management"-->
+    <!--        android:name="com.example.programinglearningapp.ui.slideshow.SlideshowFragment"-->
+    <!--        android:label="@string/menu_infor_course"-->
+    <!--        tools:layout="@layout/fragment_course_management" />-->
+
     <fragment
         android:id="@+id/nav_course_management_admin"
         android:name="com.example.programinglearningapp.ui.courseManagement.CourseManagementFragment"
@@ -34,6 +40,12 @@
         android:name="com.example.programinglearningapp.ui.MemberManager.MemberManagementFragment"
         android:label="Quản lý thành viên"
         tools:layout="@layout/activity_member_management" />
+
+    <!--    <fragment-->
+    <!--        android:id="@+id/nav_member_management_edit"-->
+    <!--        android:name="com.example.programinglearningapp.ui.MemberManager.MemberManagementEdit"-->
+    <!--        android:label="Sửa thông tin thành viên"-->
+    <!--        tools:layout="@layout/activity_member_management_edit" />-->
 
     <fragment
         android:id="@+id/nav_log_out"

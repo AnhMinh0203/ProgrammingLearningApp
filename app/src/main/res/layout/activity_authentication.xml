@@ -12,7 +12,7 @@
         android:layout_width="229dp"
         android:layout_height="32dp"
         android:layout_marginTop="212dp"
-        android:text="Đăng nhập vào F8"
+        android:text="Đăng nhập vào F9"
         android:textAlignment="center"
         android:textSize="24sp"
         android:textStyle="bold"
