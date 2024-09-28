@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.programinglearningapp.R;
 import com.example.programinglearningapp.db.Course.CourseHelper;
+import com.example.programinglearningapp.db.RegisterCourse;
 import com.example.programinglearningapp.db.lesson.lessonHelper;
 import com.example.programinglearningapp.model.Course;
 import com.example.programinglearningapp.ui.auth.Authentication;
@@ -117,6 +118,12 @@ public class courseDetail extends AppCompatActivity {
         }
 
         String userRole = Authentication.role;
+        Integer userId = Integer.parseInt(Authentication.id);
+        Integer courseIdInt = Integer.parseInt(courseId);
+
+        buttonRegisterCourse.setOnClickListener(v -> {
+            registerCourse(userId, courseIdInt);
+        });
 
         if(userRole.equals("0")) {
             buttonUpdateCourse.setVisibility(View.GONE);
@@ -174,6 +181,21 @@ public class courseDetail extends AppCompatActivity {
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .show();
             });
+        }
+
+    }
+
+    private void registerCourse(Integer userId, Integer courseId) {
+        RegisterCourse registerCourse = new RegisterCourse(this);
+
+        // Gọi hàm registerCourse để thêm khóa học
+        boolean isRegistered = registerCourse.registerCourse(userId, courseId);
+
+        // Thêm khóa học vào database
+        if (isRegistered) {
+            Toast.makeText(this, "Khóa học đã được thêm vào khóa học của tôi!", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Khóa học đã được đăng ký trước đó!", Toast.LENGTH_SHORT).show();
         }
 
     }
