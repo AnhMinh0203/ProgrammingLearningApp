@@ -20,6 +20,8 @@ import com.example.programinglearningapp.ui.lesson.lessionContentUser;
 public class Authentication extends AppCompatActivity {
     private Button button_signIn;
     private DatabaseHelper dbHelper;
+    public static String id;
+    public static String role;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,8 +37,8 @@ public class Authentication extends AppCompatActivity {
             String password = editTextPassword.getText().toString();
 
             if(!email.isEmpty() && !password.isEmpty()) {
-                String role = dbHelper.getUserRole(email, password);
-                String id = dbHelper.getUserId(email, password);
+                role = dbHelper.getUserRole(email, password);
+                id = dbHelper.getUserId(email, password);
                 if (role != null) {
                     Toast.makeText(this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(Authentication.this, MainActivity.class);

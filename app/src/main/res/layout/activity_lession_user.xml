@@ -5,18 +5,26 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.course.courseDetail">
+    tools:context=".ui.lesson.lessionUser">
 
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp">
+        android:padding="40dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginTop="10dp">
+
+            <!-- Course Title -->
+            <!--            <TextView-->
+            <!--                android:id="@+id/textView3"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:text="Id" />-->
 
             <TextView
                 android:id="@+id/courseTitle"
@@ -36,31 +44,6 @@
                 android:textSize="16sp"
                 android:layout_marginVertical="8dp" />
 
-            <LinearLayout
-                android:id="@+id/createLessonElement"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="8dp"
-                android:layout_marginVertical="8dp"
-                android:background="@drawable/border_content_courses">
-
-                <ImageView
-                    android:id="@+id/iconCreateLesson"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:contentDescription="Icon"
-                    android:src="@drawable/icon_plus" />
-
-                <TextView
-                    android:id="@+id/textCreateLesson"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="Create a Lesson"
-                    android:textSize="16sp" />
-            </LinearLayout>
-
             <!-- Container for dynamically created lesson views -->
             <LinearLayout
                 android:id="@+id/lessonContainerView"
@@ -73,22 +56,10 @@
                 android:background="@drawable/border_lesson_edit"/>
 
             <Button
-                android:id="@+id/buttonUpdateCourse"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Cập nhật" />
-
-            <Button
-                android:id="@+id/button_signUp_course"
+                android:id="@+id/button_add_to_my_courses"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Đăng ký" />
-
-            <Button
-                android:id="@+id/buttonDeleteCourse"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Xóa khóa học" />
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,8 +1,6 @@
 package com.example.programinglearningapp.ui.home;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,6 +19,7 @@ import com.example.programinglearningapp.model.Course;
 import com.example.programinglearningapp.ui.course.courseDetail;
 import com.example.programinglearningapp.ui.courseManagement.CourseManager_Create;
 import com.example.programinglearningapp.ui.lesson.lessionContentUser;
+import com.example.programinglearningapp.ui.lesson.lessionUser;
 import com.example.programinglearningapp.ui.lesson.lessonDetail;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -46,6 +45,7 @@ public class HomeFragment extends Fragment implements CourseAdapter.OnCourseClic
         courseList = new ArrayList<>();
         courseAdapter = new CourseAdapter(getContext(), courseList, this); // Pass 'this' as OnCourseClickListener
         recyclerViewCourses.setAdapter(courseAdapter);
+
         // Load course data
         loadCourses();
         return view;
@@ -65,8 +65,10 @@ public class HomeFragment extends Fragment implements CourseAdapter.OnCourseClic
 
     @Override
     public void onCourseClick(Course course) {
-        // Navigate to CourseDetailActivity
-        Intent intent = new Intent(getActivity(), lessionContentUser.class);
+        Intent intent = new Intent(getActivity(), lessionUser.class);
+        int id = course.getId();
+        String idString = String.valueOf(id);
+        intent.putExtra("id",idString);
         intent.putExtra("courseTitle", course.getTitle());
         intent.putExtra("courseDescription", course.getDescription());
         intent.putExtra("courseImage", course.getImageUrl());

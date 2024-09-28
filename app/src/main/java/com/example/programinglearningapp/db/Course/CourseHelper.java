@@ -102,4 +102,42 @@ public class CourseHelper {
         cursor.close();
         return courses;
     }
+
+    public boolean updateCourse(Course course) {
+        ContentValues contentValues = new ContentValues();
+        // Update course fields
+        contentValues.put("course_name", course.getTitle());
+        contentValues.put("description", course.getDescription());
+        contentValues.put("img", course.getImageUrl());
+
+        // Update the course where id matches
+        int result = database.update("courses", contentValues, "id = ?", new String[]{String.valueOf(course.getId())});
+
+        return result > 0; // Returns true if the update was successful
+    }
+
+    public boolean deleteCourse(String courseId) {
+
+        try {
+            // Start a transaction
+            database.beginTransaction();
+
+            // Delete the course
+            String whereClause = "id = ?";
+            String[] whereArgs = { courseId };
+            int rowsDeleted = database.delete("courses", whereClause, whereArgs); // Assuming "courses" is your table name
+
+            // Commit the transaction
+            database.setTransactionSuccessful();
+            return rowsDeleted > 0; // Return true if at least one row was deleted
+        } catch (Exception e) {
+            e.printStackTrace(); // Handle the exception
+            return false; // Return false in case of an error
+        } finally {
+            // End the transaction
+            database.endTransaction();
+            database.close(); // Close the database connection
+        }
+    }
+
 }

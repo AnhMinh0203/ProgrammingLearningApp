@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
                 .setOpenableLayout(drawer)
                 .build();
 
-        if (userRole.equals("0")) {
+        if (userRole.equals("1")) {
             // Nếu người dùng là admin, thêm các mục điều hướng quản lý
             mAppBarConfiguration = new AppBarConfiguration.Builder(
                     R.id.nav_home, R.id.nav_infor_personal, R.id.nav_course_management_user,

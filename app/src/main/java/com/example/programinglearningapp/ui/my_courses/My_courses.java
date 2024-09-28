@@ -19,6 +19,7 @@ import com.example.programinglearningapp.db.Course.CourseHelper;
 import com.example.programinglearningapp.db.DatabaseHelper;
 import com.example.programinglearningapp.db.MyCourses;
 import com.example.programinglearningapp.model.Course;
+import com.example.programinglearningapp.ui.auth.Authentication;
 
 
 import java.util.ArrayList;
@@ -60,11 +61,11 @@ public class My_courses extends AppCompatActivity {
     }
 
     private void loadCourses() {
-        List<Course> myCourseList = courseHelper.getCoursesRegisterForUser(2);
+        courseList = courseHelper.getCoursesRegisterForUser(Integer.parseInt(Authentication.id));
 
-        if (myCourseList != null) {
+        if (courseList != null) {
             courseList.clear();
-            courseList.addAll(myCourseList);
+            courseList.addAll(courseList);
             courseAdapter.notifyDataSetChanged();
         } else {
             Log.e("MyCourses", "Failed to load courses: newCourseList is null");

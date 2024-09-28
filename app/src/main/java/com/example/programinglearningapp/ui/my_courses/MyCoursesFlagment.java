@@ -19,7 +19,11 @@ import com.example.programinglearningapp.db.Course.CourseAdapter;
 import com.example.programinglearningapp.db.Course.CourseHelper;
 import com.example.programinglearningapp.db.DatabaseHelper;
 import com.example.programinglearningapp.model.Course;
+import com.example.programinglearningapp.ui.auth.Authentication;
+import com.example.programinglearningapp.ui.course.courseDetail;
 import com.example.programinglearningapp.ui.courseManagement.CourseManager_Create;
+import com.example.programinglearningapp.ui.lesson.lessionContentUser;
+import com.example.programinglearningapp.ui.lesson.lessionUser;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -56,7 +60,7 @@ public class MyCoursesFlagment extends Fragment implements CourseAdapter.OnCours
         return view;
     }
     private void loadCourses() {
-        List<Course> myCourseList = courseHelper.getCoursesRegisterForUser(1);
+        List<Course> myCourseList = courseHelper.getCoursesRegisterForUser(Integer.parseInt(Authentication.id));
 
         if (myCourseList != null) {
             courseList.clear(); // Clear the old data
@@ -68,9 +72,13 @@ public class MyCoursesFlagment extends Fragment implements CourseAdapter.OnCours
     }
     @Override
     public void onCourseClick(Course course) {
-        Intent intent = new Intent(getContext(), CourseManager_Create.class);
-        intent.putExtra("course_id", course.getId());  // Handle course click and pass data
-        startActivity(intent);
+        Intent intent = new Intent(getContext(), courseDetail.class);
+        String idString = String.valueOf(course.getId());
+        intent.putExtra("id",idString);
+        intent.putExtra("courseTitle", course.getTitle());
+        intent.putExtra("courseDescription", course.getDescription());
+        intent.putExtra("courseImage", course.getImageUrl());
+        startActivityForResult(intent,1);
     }
     @Override
     public void onDestroyView() {

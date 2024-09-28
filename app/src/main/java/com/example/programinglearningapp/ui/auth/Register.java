@@ -38,9 +38,10 @@ public class Register extends AppCompatActivity {
         // Ghi thử dữ liệu vào bảng "users"
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("username", "test_user");
-        values.put("password", "test_password");
-        values.put("email", "testhiiii@example.com");
+        values.put("username", "admin");
+        values.put("password", "admin");
+        values.put("email", "admin@gmail.com");
+        values.put("role", 1);
         values.put("dob", "1990-01-01");
 
         long newRowId = db.insert("users", null, values); // Thao tác ghi // Thao tác ghi

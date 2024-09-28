@@ -90,7 +90,7 @@ public class CourseManagementFragment extends Fragment implements CourseAdapter.
         intent.putExtra("courseTitle", course.getTitle());
         intent.putExtra("courseDescription", course.getDescription());
         intent.putExtra("courseImage", course.getImageUrl());
-        startActivity(intent);
+        startActivityForResult(intent,1);
     }
 }
 
