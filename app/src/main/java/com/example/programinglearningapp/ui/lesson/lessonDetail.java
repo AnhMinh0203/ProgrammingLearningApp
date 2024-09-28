@@ -1,5 +1,6 @@
 package com.example.programinglearningapp.ui.lesson;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Build;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -58,6 +60,7 @@ public class lessonDetail extends AppCompatActivity {
         btnNextLesson = findViewById(R.id.btnNextLesson);
         btnPreviousLesson = findViewById(R.id.btnPreviousLesson);
         btnUpdateLesson = findViewById(R.id.btnUpdateLesson);
+        btnDeleteLesson = findViewById(R.id.btnDeleteLesson);
 
         // Get data from Intent
         currentLessonId = getIntent().getIntExtra("LESSON_ID", -1); // Get the lesson ID
@@ -83,18 +86,56 @@ public class lessonDetail extends AppCompatActivity {
 
         btnUpdateLesson.setOnClickListener(v -> {
             Intent intent = new Intent(lessonDetail.this, LessonManagement_Update.class);
-            String contentLesson =  lessonHelper.getContentLessonById(String.valueOf(currentLessonId));
+
+            // Fetch lesson content and quiz data
+            String contentLesson = lessonHelper.getContentLessonById(String.valueOf(currentLessonId));
             List<Quiz> quizList = fetchExamDataFromDatabase(String.valueOf(currentLessonId));
 
+            // Pass necessary data to the update activity
             intent.putExtra("lessonId", currentLessonId);
             intent.putExtra("status", "update");
             intent.putExtra("lessonTitle", tvLessonTitle.getText().toString());
             intent.putExtra("lessonContent", contentLesson);
 
-            // Pass the quiz data if needed
+            // Pass the quiz data as a Serializable object
             intent.putExtra("quizData", (Serializable) quizList);
+
             startActivity(intent);
         });
+
+
+        btnDeleteLesson.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Tạo hộp thoại cảnh báo
+                new AlertDialog.Builder(lessonDetail.this)
+                        .setTitle("Cảnh báo")
+                        .setMessage("Bạn có chắc muốn xóa bài học này")
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // Thực hiện hành động xóa lesson
+                                boolean isDeleted = lessonHelper.deleteLessonById(String.valueOf(currentLessonId));
+
+                                if (isDeleted) {
+                                    Toast.makeText(lessonDetail.this, "Xóa bài học thành công!", Toast.LENGTH_SHORT).show();
+
+                                    // Trả kết quả về cho activity trước đó (courseDetail)
+                                    Intent resultIntent = new Intent();
+                                    resultIntent.putExtra("IS_LESSON_DELETED", true);
+                                    setResult(RESULT_OK, resultIntent);
+
+                                    finish(); // Đóng activity hiện tại sau khi xóa thành công
+                                } else {
+                                    Toast.makeText(lessonDetail.this, "Xóa bài học thất bại!", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        })
+                        .setNegativeButton(android.R.string.cancel, null) // Không làm gì khi nhấn "Cancel"
+                        .show();
+            }
+        });
+
+
     }
 
     // Function to load a lesson

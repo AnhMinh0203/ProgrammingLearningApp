@@ -73,10 +73,22 @@
                 android:background="@drawable/border_lesson_edit"/>
 
             <Button
+                android:id="@+id/buttonUpdateCourse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cập nhật" />
+
+            <Button
                 android:id="@+id/button_signUp_course"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Đăng ký" />
+
+            <Button
+                android:id="@+id/buttonDeleteCourse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Xóa khóa học" />
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

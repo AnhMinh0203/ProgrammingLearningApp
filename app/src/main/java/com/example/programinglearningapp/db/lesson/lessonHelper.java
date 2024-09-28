@@ -101,4 +101,10 @@ public class lessonHelper {
         }
         return correctIndex; // Trả về vị trí đáp án đúng (hoặc -1 nếu không tìm thấy)
     }
+
+    public boolean deleteLessonById(String lessonId) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        return db.delete("lessons", "id = ?", new String[]{lessonId}) > 0;
+    }
+
 }

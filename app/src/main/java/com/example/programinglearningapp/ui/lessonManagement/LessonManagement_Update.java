@@ -54,10 +54,7 @@ public class LessonManagement_Update extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_lesson_manager_update);
 
-        Button updateLessonButton = findViewById(R.id.updateLesson);
-        updateLessonButton.setOnClickListener(v -> updateLesson(this));
         lessonHelper = new lessonHelper(this);
-
         mEditor = findViewById(R.id.editorUpdate);
         quizCheckbox = findViewById(R.id.quizCheckboxUpdate);
         Intent intent = getIntent();
@@ -72,30 +69,28 @@ public class LessonManagement_Update extends AppCompatActivity {
         ((EditText) findViewById(R.id.lessonTitleUpdate)).setText(lessonTitle);
         mEditor.setHtml(lessonContent);
 
-        quizCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    addQuestionButton.setVisibility(View.VISIBLE);
-                } else {
-                    addQuestionButton.setVisibility(View.GONE);
-                }
+        quizCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                addQuestionButton.setVisibility(View.VISIBLE);
+            } else {
+                addQuestionButton.setVisibility(View.GONE);
+                questionContainer.removeAllViews(); // Remove existing questions if the checkbox is unchecked
             }
         });
+
         addQuestionButton.setOnClickListener(v -> {
             // Inflate layout câu hỏi trắc nghiệm từ file XML
             LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View newQuestionView = inflater.inflate(R.layout.quiz_item_create, null);
-
             questionContainer.addView(newQuestionView);
-
         });
 
+        // Populate existing quiz questions
         for (Quiz quiz : quizList) {
             LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View newQuestionView = inflater.inflate(R.layout.quiz_item_create, null);
 
-            // Lấy các thành phần từ newQuestionView
+            // Get components from newQuestionView
             EditText quizQuestion = newQuestionView.findViewById(R.id.quizQuestion);
             EditText answer1 = newQuestionView.findViewById(R.id.answer1);
             EditText answer2 = newQuestionView.findViewById(R.id.answer2);
@@ -106,7 +101,7 @@ public class LessonManagement_Update extends AppCompatActivity {
             RadioButton correctAnswer3 = newQuestionView.findViewById(R.id.correctAnswer3);
             RadioButton correctAnswer4 = newQuestionView.findViewById(R.id.correctAnswer4);
 
-            // Thiết lập dữ liệu từ quiz
+            // Set data from quiz
             quizQuestion.setText(quiz.getQuestion());
             List<String> options = quiz.getOptions();
             if (options != null && options.size() >= 4) {
@@ -118,7 +113,7 @@ public class LessonManagement_Update extends AppCompatActivity {
 
             int correctAnswerIndex = lessonHelper.getCorrectAnswerIndex(quiz.getId());
 
-            // Đặt trạng thái cho RadioButton tương ứng với đáp án đúng
+            // Set state for RadioButton according to correct answer
             switch (correctAnswerIndex) {
                 case 0:
                     correctAnswer1.setChecked(true);
@@ -141,6 +136,10 @@ public class LessonManagement_Update extends AppCompatActivity {
             }
             questionContainer.addView(newQuestionView);
         }
+
+        // Update lesson button click listener
+        Button updateLessonButton = findViewById(R.id.updateLesson);
+        updateLessonButton.setOnClickListener(v -> updateLesson(this));
     }
 
     private void updateLesson(Context context) {
