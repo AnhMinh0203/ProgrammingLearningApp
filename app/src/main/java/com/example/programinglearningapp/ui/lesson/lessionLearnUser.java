@@ -26,7 +26,6 @@ import com.example.programinglearningapp.db.lesson.lessonHelper;
 import com.example.programinglearningapp.model.Quiz;
 import com.example.programinglearningapp.ui.auth.Authentication;
 import com.example.programinglearningapp.ui.course.courseDetail;
-import com.example.programinglearningapp.ui.lessonManagement.LessonManagement_Create;
 import com.example.programinglearningapp.ui.lessonManagement.LessonManagement_Update;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -36,11 +35,11 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class lessonDetail extends AppCompatActivity {
+public class lessionLearnUser extends AppCompatActivity {
 
     private TextView tvLessonTitle, tvLessonContent;
     private RecyclerView rvQuiz;
-    private lessonHelper lessonHelper;
+    private com.example.programinglearningapp.db.lesson.lessonHelper lessonHelper;
     private QuizAdapter quizAdapter;
     private Button btnNextLesson, btnPreviousLesson,btnUpdateLesson,btnDeleteLesson;
 
@@ -51,7 +50,8 @@ public class lessonDetail extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lesson_detail);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_lession_learn_user);
         lessonHelper = new lessonHelper(this);
 
         // Map the views
@@ -60,8 +60,6 @@ public class lessonDetail extends AppCompatActivity {
         rvQuiz = findViewById(R.id.rvQuiz);
         btnNextLesson = findViewById(R.id.btnNextLesson);
         btnPreviousLesson = findViewById(R.id.btnPreviousLesson);
-        btnUpdateLesson = findViewById(R.id.btnUpdateLesson);
-        btnDeleteLesson = findViewById(R.id.btnDeleteLesson);
 
         // Get data from Intent
         currentLessonId = getIntent().getIntExtra("LESSON_ID", -1); // Get the lesson ID
@@ -92,65 +90,12 @@ public class lessonDetail extends AppCompatActivity {
             btnDeleteLesson.setVisibility(View.GONE);
         }
 
-        String display = getIntent().getStringExtra("display");
+        String hide = getIntent().getStringExtra("hide");
 
-        if(!"display".equals(display)) {
-            btnUpdateLesson.setVisibility(View.GONE);
-            btnDeleteLesson.setVisibility(View.GONE);
-        }
-
-
-        btnUpdateLesson.setOnClickListener(v -> {
-            Intent intent = new Intent(lessonDetail.this, LessonManagement_Update.class);
-
-            // Fetch lesson content and quiz data
-            String contentLesson = lessonHelper.getContentLessonById(String.valueOf(currentLessonId));
-            List<Quiz> quizList = fetchExamDataFromDatabase(String.valueOf(currentLessonId));
-
-            // Pass necessary data to the update activity
-            intent.putExtra("lessonId", currentLessonId);
-            intent.putExtra("status", "update");
-            intent.putExtra("lessonTitle", tvLessonTitle.getText().toString());
-            intent.putExtra("lessonContent", contentLesson);
-
-            // Pass the quiz data as a Serializable object
-            intent.putExtra("quizData", (Serializable) quizList);
-
-            startActivity(intent);
-        });
-
-
-        btnDeleteLesson.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Tạo hộp thoại cảnh báo
-                new AlertDialog.Builder(lessonDetail.this)
-                        .setTitle("Cảnh báo")
-                        .setMessage("Bạn có chắc muốn xóa bài học này")
-                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                // Thực hiện hành động xóa lesson
-                                boolean isDeleted = lessonHelper.deleteLessonById(String.valueOf(currentLessonId));
-
-                                if (isDeleted) {
-                                    Toast.makeText(lessonDetail.this, "Xóa bài học thành công!", Toast.LENGTH_SHORT).show();
-
-                                    // Trả kết quả về cho activity trước đó (courseDetail)
-                                    Intent resultIntent = new Intent();
-                                    resultIntent.putExtra("IS_LESSON_DELETED", true);
-                                    setResult(RESULT_OK, resultIntent);
-
-                                    finish(); // Đóng activity hiện tại sau khi xóa thành công
-                                } else {
-                                    Toast.makeText(lessonDetail.this, "Xóa bài học thất bại!", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        })
-                        .setNegativeButton(android.R.string.cancel, null) // Không làm gì khi nhấn "Cancel"
-                        .show();
-            }
-        });
-
+//        if(userRole.equals("1") && "hide".equals(hide)) {
+//            btnUpdateLesson.setVisibility(View.GONE);
+//            btnDeleteLesson.setVisibility(View.GONE);
+//        }
 
     }
 

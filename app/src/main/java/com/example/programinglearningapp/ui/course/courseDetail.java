@@ -22,9 +22,11 @@ import com.example.programinglearningapp.db.lesson.lessonHelper;
 import com.example.programinglearningapp.model.Course;
 import com.example.programinglearningapp.ui.auth.Authentication;
 import com.example.programinglearningapp.ui.courseManagement.CourseManager_Update;
+import com.example.programinglearningapp.ui.lesson.lessionLearnUser;
 import com.example.programinglearningapp.ui.lesson.lessonDetail;
 import com.example.programinglearningapp.ui.lessonManagement.LessonManagement_Create;
 import com.example.programinglearningapp.ui.lessonManagement.LessonManagement_Update;
+import com.example.programinglearningapp.ui.my_courses.MyCoursesFlagment;
 
 public class courseDetail extends AppCompatActivity {
     private TextView courseTitle, courseDescription;
@@ -80,6 +82,7 @@ public class courseDetail extends AppCompatActivity {
 
                     int idIndex = lessonsCursor.getColumnIndex("id"); // Assuming you have an 'id' column
                     int lessonId = lessonsCursor.getInt(idIndex); // Get the lesson ID
+                    String display = intent.getStringExtra("display");
 
                     // Find and set the title for the lesson
                     TextView lessonTitleView = lessonLayout.findViewById(R.id.lessonTitle);
@@ -87,6 +90,8 @@ public class courseDetail extends AppCompatActivity {
 
                     lessonLayout.setOnClickListener(v -> {
                         Intent detailLesson = new Intent(this, lessonDetail.class);
+//                        detailLesson.putExtra("hide", "hide");
+                        detailLesson.putExtra("display", display);
                         detailLesson.putExtra("LESSON_ID", lessonId); // Pass the lesson ID
                         detailLesson.putExtra("COURSE_ID", courseId); // Pass the course ID if you have it
                         startActivityForResult(detailLesson,1);
@@ -102,12 +107,28 @@ public class courseDetail extends AppCompatActivity {
 
         }
 
+        String hide = intent.getStringExtra("hideRegister");
+        String hideAdmin = intent.getStringExtra("hideAdmin");
+
+        if ("hide".equals(hide)) {
+            buttonRegisterCourse.setVisibility(View.GONE); // Ẩn nút nếu hide bằng "2"
+        } else {
+            buttonRegisterCourse.setVisibility(View.VISIBLE); // Hiển thị lại nút trong các trường hợp khác
+        }
+
         String userRole = Authentication.role;
 
         if(userRole.equals("0")) {
             buttonUpdateCourse.setVisibility(View.GONE);
             buttonDeleteCourse.setVisibility(View.GONE);
-            buttonRegisterCourse.setVisibility(View.GONE);
+//            buttonRegisterCourse.setVisibility(View.GONE);
+            createLessonElement.setVisibility(View.GONE);
+        }
+
+        if(userRole.equals("1") && "hideAdmin".equals(hideAdmin)) {
+            buttonUpdateCourse.setVisibility(View.GONE);
+            buttonDeleteCourse.setVisibility(View.GONE);
+//            buttonRegisterCourse.setVisibility(View.GONE);
             createLessonElement.setVisibility(View.GONE);
         }
 

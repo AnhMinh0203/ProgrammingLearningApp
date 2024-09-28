@@ -65,14 +65,16 @@ public class HomeFragment extends Fragment implements CourseAdapter.OnCourseClic
 
     @Override
     public void onCourseClick(Course course) {
-        Intent intent = new Intent(getActivity(), lessionUser.class);
+        Intent intent = new Intent(getActivity(), courseDetail.class);
         int id = course.getId();
         String idString = String.valueOf(id);
+        String hideAdmin = "hideAdmin";
         intent.putExtra("id",idString);
         intent.putExtra("courseTitle", course.getTitle());
         intent.putExtra("courseDescription", course.getDescription());
         intent.putExtra("courseImage", course.getImageUrl());
         intent.putExtra("courseId", course.getId());
+        intent.putExtra("hideAdmin", hideAdmin);
         startActivity(intent);
     }
 }

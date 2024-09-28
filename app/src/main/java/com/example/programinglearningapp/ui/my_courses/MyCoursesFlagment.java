@@ -73,11 +73,13 @@ public class MyCoursesFlagment extends Fragment implements CourseAdapter.OnCours
     @Override
     public void onCourseClick(Course course) {
         Intent intent = new Intent(getContext(), courseDetail.class);
+        String hideRegister = "hide";
         String idString = String.valueOf(course.getId());
         intent.putExtra("id",idString);
         intent.putExtra("courseTitle", course.getTitle());
         intent.putExtra("courseDescription", course.getDescription());
         intent.putExtra("courseImage", course.getImageUrl());
+        intent.putExtra("hideRegister", hideRegister);
         startActivityForResult(intent,1);
     }
     @Override

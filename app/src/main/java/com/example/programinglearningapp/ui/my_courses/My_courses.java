@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -31,6 +32,7 @@ public class My_courses extends AppCompatActivity {
     private CourseHelper courseHelper;
     private List<Course> courseList;
     private CourseAdapter courseAdapter;
+//    Button buttonRegisterCourse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,8 @@ public class My_courses extends AppCompatActivity {
         courseHelper = new CourseHelper(this);  // Khởi tạo CourseHelper
 
         courseRegistered = findViewById(R.id.courseRegistered);
+//        buttonRegisterCourse = findViewById(R.id.button_signUp_course);
+//        buttonRegisterCourse.setVisibility(View.GONE);
 
         loadCourses();
 
