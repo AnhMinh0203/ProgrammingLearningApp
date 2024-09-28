@@ -15,9 +15,17 @@
         android:theme="@style/Theme.ProgramingLearningApp"
         tools:targetApi="31">
         <activity
-            android:name=".ui.lesson.lessonDetail"
+            android:name=".ui.courseManagement.CourseManager_Update"
             android:exported="false"
             android:theme="@style/Theme.ProgramingLearningApp.NoActionBar"/>
+        <activity
+            android:name=".ui.lessonManagement.LessonManagement_Update"
+            android:exported="false"
+            android:theme="@style/Theme.ProgramingLearningApp.NoActionBar" />
+        <activity
+            android:name=".ui.lesson.lessonDetail"
+            android:exported="false"
+            android:theme="@style/Theme.ProgramingLearningApp.NoActionBar" />
         <activity
             android:name=".ui.lessonManagement.LessonManagement_Create"
             android:exported="false"

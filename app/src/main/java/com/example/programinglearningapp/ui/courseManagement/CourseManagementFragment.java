@@ -84,10 +84,13 @@ public class CourseManagementFragment extends Fragment implements CourseAdapter.
     public void onCourseClick(Course course) {
         // Navigate to CourseDetailActivity
         Intent intent = new Intent(getActivity(), courseDetail.class);
+        int id = course.getId();
+        String idString = String.valueOf(id);
+        intent.putExtra("id",idString);
         intent.putExtra("courseTitle", course.getTitle());
         intent.putExtra("courseDescription", course.getDescription());
         intent.putExtra("courseImage", course.getImageUrl());
-        startActivity(intent);
+        startActivityForResult(intent,1);
     }
 }
 
